@@ -40,7 +40,20 @@ td .btn, table {
               <td>
                 {{ game.home_name}}
               </td>
-              <td>{{ game.home_score }} - {{ game.away_score }}</td>
+              <td>
+                %if game.home_score == None:
+                    vs
+                %else:
+                    <div class='score hidden {{game.home_name}}
+                                {{game.away_name}}'>
+                        {{ game.home_score }} - {{ game.away_score }}
+                    </div>
+                    <div class='noscore {{game.home_name}}
+                                {{game.away_name}}'>
+                        ? - ?
+                    </div>
+                %end
+              </td>
               <td>
                 {{ game.away_name}}
               </td>
