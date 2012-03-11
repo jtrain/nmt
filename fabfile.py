@@ -10,7 +10,6 @@ def prod():
 def deploy():
     require('hosts', provided_by=[prod])
     require('user', provided_by=[prod,])
-    require('hg', provided_by=[prod,])
     require('remote_app_dir', provided_by=[prod,])
 
     # send the latest content to the analyst.
