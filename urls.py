@@ -14,10 +14,7 @@ conn = create_db_and_get_connection(settings.DB_NAME)
 
 #-------------------
 
-DEBUG = True
-
 SimpleTemplate.defaults.update({"get_url": url, 'sitename':'Not My Team'})
-
 
 def register_urls():
     """
@@ -64,7 +61,7 @@ def index():
 
 @route('/static/:path#.+#', name='static')
 def static(path):
-    if DEBUG:
+    if settings.DEBUG:
         response.set_header('Cache-Control', 'no-cache')
     return static_file(path, root='static')
 

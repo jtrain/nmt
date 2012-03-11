@@ -1,4 +1,5 @@
 import os
+import socket
 
 HOST = 'localhost'
 PORT = 8080
@@ -26,3 +27,6 @@ SCRAPE_USER_AGENT = ('Mozilla/5.0 (Windows NT x.y; rv:10.0.1) '
 
 POST_KEY = 'secret.squirrel.shit'
 POST_HOOK = 'update/games/'
+
+if socket.gethostname().lower().startswith('ip'):
+    from prod_settings import *
