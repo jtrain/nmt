@@ -34,7 +34,7 @@ td .btn, table {
     <div class="span12">
       <div class="hero-unit">
         <h1>Game Results</h1>
-        <table style="width: 100%;">
+        <table class="table table-striped" style="width: 100%;">
           %for game in games:
             <tr>
               <td>
