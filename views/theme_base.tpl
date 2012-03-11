@@ -17,6 +17,7 @@
             }
           </style>
           <link href="{{ get_url('static', path="css/bootstrap-responsive.css") }}" rel="stylesheet">
+          <link rel="stylesheet" href="{{ get_url('static', path='css/nmt.css') }}">
 
     </head>
     <body>
@@ -29,7 +30,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="#">{{ sitename }}</a>
+          <a class="brand" href="{{ get_url('index') }}">{{ sitename }}</a>
           <div class="nav-collapse">
             <ul class="nav">
               <li class="active"><a href="{{get_url('index')}}">Home</a></li>

@@ -1,0 +1,16 @@
+table.game{
+    width:100%;
+}
+td.home {
+    text-align:right;
+}
+td.score {
+    text-align:center;
+}
+td.away {
+    text-align:left;
+}
+
+td .btn, table {
+  width: 100%;
+}
