@@ -52,12 +52,33 @@
     </div>
 
     %include js_base get_url=get_url
-    <script>
-if (getCookie('not_my_team_name') !== undefined){
-  $('.results').removeClass('hidden');
-} else {
-  $('.pick').removeClass('hidden');
-}
+    <script type="text/javascript">
+
+      function getCookie(c_name) {
+        var i,x,y,ARRcookies=document.cookie.split(";");
+        for (i=0;i<ARRcookies.length;i++) {
+
+          x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
+          y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
+          x=x.replace(/^\s+|\s+$/g,"");
+          if (x==c_name) {
+            return unescape(y).replace(/"/g, '');
+          }
+        }
+      }
+
+     var team = getCookie('not_my_team_name').replace(/ /g, '-');
+     if ( team === undefined){
+       // show the pick team view.
+       $('.pick').removeClass('hidden');
+     } else {
+       // hide the ?s for games you want to see and show the scores.
+       $('.noscore').not('.' + team).addClass('hidden');
+       $('.score').not('.' + team).removeClass('hidden');
+
+       // now show the entire results container.
+       $('.results').removeClass('hidden');
+     }
     </script>
-    </body>
+  </body>
 </html>

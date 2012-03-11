@@ -1,19 +1,4 @@
 %rebase theme_base title=title
-
-<script>
-function getCookie(c_name) {
-  var i,x,y,ARRcookies=document.cookie.split(";");
-  for (i=0;i<ARRcookies.length;i++) {
-
-    x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
-    y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
-    x=x.replace(/^\s+|\s+$/g,"");
-    if (x==c_name) {
-      return unescape(y).replace(/"/g, '');
-    }
-  }
-}
-</script>
 <style>
 
 td .btn, table {
@@ -59,12 +44,12 @@ td .btn, table {
                 %if game.home_score == None:
                     vs
                 %else:
-                    <div class='score hidden {{game.home_name}}
-                                {{game.away_name}}'>
+                    <div class='score hidden {{game.home_name.replace(" ", "-")}}
+                                {{game.away_name.replace(" ", "-")}}'>
                         {{ game.home_score }} - {{ game.away_score }}
                     </div>
-                    <div class='noscore {{game.home_name}}
-                                {{game.away_name}}'>
+                    <div class='noscore {{game.home_name.replace(" ", "-")}}
+                                {{game.away_name.replace(" ", "-")}}'>
                         ? - ?
                     </div>
                 %end
