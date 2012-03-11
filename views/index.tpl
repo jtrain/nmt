@@ -1,16 +1,14 @@
 %rebase theme_base title=title
 <style>
 
-td .btn, table {
-  width: 100%;
-}
+
 </style>
 <form class="pick hidden" method="POST" action="/">
   <div class='row-fluid'>
     <div class="span12">
       <div class="hero-unit">
         <h1>Pick your team!</h1>
-        <table style="width: 100%;">
+        <table class='game'>
           %for game in games:
             <tr>
               <td>
@@ -34,13 +32,13 @@ td .btn, table {
     <div class="span12">
       <div class="hero-unit">
         <h1>Game Results</h1>
-        <table style="width: 100%;">
+        <table class="game">
           %for game in games:
             <tr>
-              <td>
+              <td class='home'>
                 {{ game.home_name}}
               </td>
-              <td>
+              <td class='score'>
                 %if game.home_score == None:
                     vs
                 %else:
@@ -54,7 +52,7 @@ td .btn, table {
                     </div>
                 %end
               </td>
-              <td>
+              <td class='away'>
                 {{ game.away_name}}
               </td>
             </tr>
