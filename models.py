@@ -12,9 +12,11 @@ Game:
 User:
     team
 """
+from collections import namedtuple
 import sqlite3
 import settings
 
+from utils import make_namedtuple_factory
 #--------------------
 # Game
 
@@ -41,6 +43,10 @@ create index if not exists by_year on Game (
 create index if not exists by_round on Game (
  round);
 """
+GameRecord = namedtuple("Game",
+                   "year round "
+                   "home_name home_score home_logo_url "
+                   "away_name away_score away_logo_url")
 
 User = """
 create table if not exists User (
@@ -58,6 +64,7 @@ def create_db_and_get_connection(db_name):
     conn.executescript(Game)
     conn.executescript(User)
     conn.commit()
+    conn.row_factory = make_namedtuple_factory(GameRecord)
     return conn
 
 def new_user(team_name, conn):
