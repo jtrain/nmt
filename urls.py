@@ -14,7 +14,9 @@ conn = create_db_and_get_connection(settings.DB_NAME)
 
 #-------------------
 
-SimpleTemplate.defaults.update({"get_url": url, 'sitename':'Not My Team'})
+SimpleTemplate.defaults.update({
+    "get_url": url,
+    'sitename':"Don't Show My Team"})
 
 def register_urls():
     """
