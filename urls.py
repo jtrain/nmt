@@ -8,6 +8,15 @@ DEBUG = True
 
 SimpleTemplate.defaults.update({"get_url": url, 'sitename':'Not My Team'})
 
+class team(object):
+    def __init__(self, name):
+        self.name = name
+
+teams = []
+for i in ['hi','bye','pissoff','1','2','3','4','5','6','7']:
+    teams.append(team(i))
+
+
 def register_urls():
     """
     Not actually required. But calling this do nothing function is a stronger
@@ -34,7 +43,8 @@ def index():
     user has a cookie or not. We use javascript on the client side to check the
     cookie and selectively show the scores.
     """
-    return template("index", title='Games!', games=this_round().fetchall())
+    return template("index", title='Games!', teams=teams,
+            games=this_round().fetchall())
 
 @route('/', method="POST")
 def index():

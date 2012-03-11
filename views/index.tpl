@@ -1,16 +1,23 @@
 %rebase theme_base title=title
-
-<div class="alert alert-block alert-success hidden">
-  <h4 class="alert-heading">Pick your team!</h4>
-  <p>
-    <a class='btn btn-success btn-large'
-        href=#
-        <strong>Pick me!</strong>
-    </a>
-    <a class='btn btn-primary btn-large'
-      href=#>
-        <strong>Or me!</strong></a>
-  </p>
-</div>
+<form method="POST" action="/">
+  <div class='row'>
+    <div class='offset2 span8'>
+      <h4 class="alert-heading">Pick your team!</h4>
+        %for i in range(4):
+          %for team in teams[i::4]:
+            <div class='span2'>
+              <h3>{{ team.name }}</h3>
+              <p>
+              <button value={{ team.name }} name='team' type='submit'
+                  class='btn btn-primary'>
+                {{ team.name }}
+              </button>
+            </p>
+            </div>
+          %end
+        %end
+    </div>
+  </div> <!--row -->
+</form>
 
 {{ games }}
