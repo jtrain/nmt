@@ -1,8 +1,18 @@
-from bottle import redirect, request, response, route, template,\
+from bottle import abort, redirect, request, response, route, template,\
                     SimpleTemplate, url, static_file
-from models import this_round, new_user
+from models import this_round, new_user, create_db_and_get_connection
+from models import update_games
 
 from utils import strip_tags
+import settings
+import json
+
+#-------------------
+# Setup the database here.
+
+conn = create_db_and_get_connection(settings.DB_NAME)
+
+#-------------------
 
 DEBUG = True
 
@@ -44,7 +54,7 @@ def index():
     cookie and selectively show the scores.
     """
     return template("index", title='Games!', teams=teams,
-            games=this_round().fetchall())
+            games=this_round(conn).fetchall())
 
 @route('/', method="POST")
 def index():
@@ -54,7 +64,7 @@ def index():
         return redirect('/')
 
     user_team = strip_tags(user_team)
-    new_user(user_team)
+    new_user(user_team, conn)
 
     response.set_cookie('not_my_team_name', user_team,
                         max_age=3600*24*365)
@@ -65,3 +75,19 @@ def static(path):
     if DEBUG:
         response.set_header('Cache-Control', 'no-cache')
     return static_file(path, root='static')
+
+@route('/update/games/', method="POST")
+def set_games():
+    try:
+        key = request.params['key']
+        records = request.params['records']
+    except KeyError:
+        return abort(400, 'Bad Request')
+
+    if not key == settings.POST_KEY:
+        return abort(403, "user key invalid")
+
+    games = json.loads(records)
+    update_games(games, conn)
+
+    redirect('/')
