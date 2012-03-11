@@ -7,20 +7,20 @@
               <div class='row'>
             %end
             <div class='span2'>
-              <h3>{{ game[2] }}</h3>
+              <h3>{{ game.home_name }}</h3>
               <p>
-              <button value={{ game[2] }} name='team' type='submit'
+              <button value={{ game.home_name }} name='team' type='submit'
                   class='btn btn-primary'>
-                {{ game[2] }}
+                {{ game.home_name }}
               </button>
             </p>
             </div>
             <div class='span2'>
-              <h3>{{ game[5] }}</h3>
+              <h3>{{ game.away_name }}</h3>
               <p>
-              <button value={{ game[5] }} name='team' type='submit'
+              <button value={{ game.away_name }} name='team' type='submit'
                   class='btn btn-primary'>
-                {{ game[5] }}
+                {{ game.away_name }}
               </button>
             </p>
             </div>
