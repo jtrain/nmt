@@ -60,7 +60,7 @@ create index if not exists by_user_id on User (
 
 def create_db_and_get_connection(db_name):
     # connect and re-create tables if they don't exist.
-    conn = sqlite3.connect(db_name)
+    conn = sqlite3.connect(db_name, check_same_thread=False)
     conn.executescript(Game)
     conn.executescript(User)
     conn.commit()
