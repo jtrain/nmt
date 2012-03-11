@@ -1,7 +1,12 @@
-from bottle import redirect, request, response, route, template
+from bottle import redirect, request, response, route, template,\
+                    SimpleTemplate, url, static_file
 from models import this_round, new_user
 
 from utils import strip_tags
+
+DEBUG = True
+
+SimpleTemplate.defaults.update({"get_url": url, 'sitename':'Not My Team'})
 
 def register_urls():
     """
@@ -16,7 +21,7 @@ def register_urls():
     """
     pass
 
-@route('/')
+@route('/',name='index')
 def index():
     """
     Home page, if the user doesn't have a cookie we will show them a list of
@@ -29,7 +34,7 @@ def index():
     user has a cookie or not. We use javascript on the client side to check the
     cookie and selectively show the scores.
     """
-    return template("index", games=this_round().fetchall())
+    return template("index", title='Games!', games=this_round().fetchall())
 
 @route('/', method="POST")
 def index():
@@ -45,3 +50,8 @@ def index():
                         max_age=3600*24*365)
     redirect('/')
 
+@route('/static/:path#.+#', name='static')
+def static(path):
+    if DEBUG:
+        response.set_header('Cache-Control', 'no-cache')
+    return static_file(path, root='static')
