@@ -62,12 +62,12 @@
           y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
           x=x.replace(/^\s+|\s+$/g,"");
           if (x==c_name) {
-            return unescape(y).replace(/"/g, '');
+            return unescape(y).replace(/"/g, '').replace(/ /g, '-');
           }
         }
       }
 
-     var team = getCookie('not_my_team_name').replace(/ /g, '-');
+     var team = getCookie('not_my_team_name');
      if ( team === undefined){
        // show the pick team view.
        $('.pick').removeClass('hidden');
