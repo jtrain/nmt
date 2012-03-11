@@ -66,7 +66,7 @@ def new_user(team_name):
     create_user = "insert into User values (null, ?);"
     conn.execute(create_user, (team_name,))
 
-    get_user_id ="select last_insert_row();"
+    get_user_id ="select last_insert_rowid();"
     new_user_id = conn.execute(get_user_id)
     conn.commit()
     return new_user_id.fetchone()
