@@ -1,4 +1,5 @@
-from bottle import abort, redirect, request, response, route, template
+from bottle import abort, redirect, request, response, route, template,\
+                    SimpleTemplate, url, static_file
 from models import this_round, new_user, create_db_and_get_connection
 from models import update_games
 
@@ -13,6 +14,11 @@ conn = create_db_and_get_connection(settings.DB_NAME)
 
 #-------------------
 
+DEBUG = True
+
+SimpleTemplate.defaults.update({"get_url": url, 'sitename':'Not My Team'})
+
+
 def register_urls():
     """
     Not actually required. But calling this do nothing function is a stronger
@@ -26,7 +32,7 @@ def register_urls():
     """
     pass
 
-@route('/')
+@route('/',name='index')
 def index():
     """
     Home page, if the user doesn't have a cookie we will show them a list of
@@ -39,7 +45,8 @@ def index():
     user has a cookie or not. We use javascript on the client side to check the
     cookie and selectively show the scores.
     """
-    return template("index", games=this_round(conn).fetchall())
+    return template("index", title='Games!',
+            games=this_round(conn).fetchall())
 
 @route('/', method="POST")
 def index():
@@ -54,6 +61,12 @@ def index():
     response.set_cookie('not_my_team_name', user_team,
                         max_age=3600*24*365)
     redirect('/')
+
+@route('/static/:path#.+#', name='static')
+def static(path):
+    if DEBUG:
+        response.set_header('Cache-Control', 'no-cache')
+    return static_file(path, root='static')
 
 @route('/update/games/', method="POST")
 def set_games():
@@ -70,4 +83,3 @@ def set_games():
     update_games(games, conn)
 
     redirect('/')
-

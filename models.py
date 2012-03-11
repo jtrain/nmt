@@ -9,10 +9,6 @@ Game:
     home score,
     away score
 
-Team:
-    team name,
-    team logo
-
 User:
     team
 """
