@@ -1,25 +1,52 @@
 %rebase theme_base title=title
 
-<form method="POST" action="/">
-  <div class='row alert alert-info offset2 span6'>
-    <h2 class="alert-heading">Pick your team!</h2>
-      <div class='row offset1'>
-        <table>
+<style>
+td .btn, table {
+  width: 100%;
+}
+</style>
+<form class="pick" method="POST" action="/">
+  <div class='row-fluid'>
+    <div class="span12">
+      <div class="hero-unit">
+        <h1>Pick your team!</h1>
+        <table style="width: 100%;">
           %for game in games:
             <tr>
               <td>
                 <button value="{{ game.home_name }}"
-                        class="btn" name="team"
+                        class="btn select" name="team"
                         type="sumit">{{ game.home_name}}</button>
               </td>
               <td>
                 <button value="{{ game.away_name }}"
-                        class="btn" name="team"
+                        class="btn select" name="team"
                         type="sumit">{{ game.away_name}}</button>
               </td>
             </tr>
           %end
-      </table>
+        </table>
+      </div>
     </div>
-  </div> <!--row -->
+  </div>
 </form>
+  <div class='row-fluid'>
+    <div class="span12">
+      <div class="hero-unit">
+        <h1>Game Results</h1>
+        <table style="width: 100%;">
+          %for game in games:
+            <tr>
+              <td>
+                {{ game.home_name}}
+              </td>
+              <td>{{ game.home_score }} - {{ game.away_score }}</td>
+              <td>
+                {{ game.away_name}}
+              </td>
+            </tr>
+          %end
+        </table>
+      </div>
+    </div>
+  </div>

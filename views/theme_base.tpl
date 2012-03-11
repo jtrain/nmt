@@ -9,7 +9,6 @@
         <![endif]-->
           <link rel="shortcut icon" href="{{ get_url('static', path='favicon.ico') }}" />
           <link rel="stylesheet" href="{{ get_url('static', path='css/bootstrap.css') }}">
-          <link href="{{ get_url('static', path="css/bootstrap-responsive.css") }}" rel="stylesheet">
 
           <style type="text/css">
             body {
@@ -17,6 +16,7 @@
               padding-bottom: 40px;
             }
           </style>
+          <link href="{{ get_url('static', path="css/bootstrap-responsive.css") }}" rel="stylesheet">
 
     </head>
     <body>
@@ -39,7 +39,7 @@
       </div>
     </div>
 
-    <div class="container">
+    <div class="container-fluid">
         %include
     </div>
 
