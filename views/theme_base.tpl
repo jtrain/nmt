@@ -52,5 +52,12 @@
     </div>
 
     %include js_base get_url=get_url
+    <script>
+if (getCookie('not_my_team_name') !== undefined){
+  $('.results').removeClass('hidden');
+} else {
+  $('.pick').removeClass('hidden');
+}
+    </script>
     </body>
 </html>

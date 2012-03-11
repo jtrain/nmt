@@ -1,11 +1,26 @@
 %rebase theme_base title=title
 
+<script>
+function getCookie(c_name) {
+  var i,x,y,ARRcookies=document.cookie.split(";");
+  for (i=0;i<ARRcookies.length;i++) {
+
+    x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
+    y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
+    x=x.replace(/^\s+|\s+$/g,"");
+    if (x==c_name) {
+      return unescape(y).replace(/"/g, '');
+    }
+  }
+}
+</script>
 <style>
+
 td .btn, table {
   width: 100%;
 }
 </style>
-<form class="pick" method="POST" action="/">
+<form class="pick hidden" method="POST" action="/">
   <div class='row-fluid'>
     <div class="span12">
       <div class="hero-unit">
@@ -30,7 +45,7 @@ td .btn, table {
     </div>
   </div>
 </form>
-  <div class='row-fluid'>
+  <div class='row-fluid results hidden'>
     <div class="span12">
       <div class="hero-unit">
         <h1>Game Results</h1>
