@@ -1,0 +1,26 @@
+syntax: glob
+*swp
+*zip
+*pyc
+*~
+mmsstuff*
+tables*
+build/*
+Scripts*
+Lib*
+*.db
+messages*
+dbf*
+lib*
+*.out
+DEBUG
+*.log
+test.py
+bin*
+include*
+glob:emails_seen_before.csv
+glob:meridian_ops.log
+glob:mda_logging.conf
+glob:meridian.pids
+*.table
+*.log.*
