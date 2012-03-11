@@ -56,13 +56,16 @@ create index if not exists by_user_id on User (
  id);
 """
 
-# connect and re-create tables if they don't exist.
-conn = sqlite3.connect(settings.DB_NAME)
-conn.executescript(Game)
-conn.executescript(User)
-conn.commit()
+def create_db_and_get_connection(db_name):
+    # connect and re-create tables if they don't exist.
+    conn = sqlite3.connect(db_name)
+    conn.executescript(Game)
+    conn.executescript(User)
+    conn.commit()
+    return conn
 
-def new_user(team_name):
+def new_user(team_name, conn):
+
     create_user = "insert into User values (null, ?);"
     conn.execute(create_user, (team_name,))
 
@@ -71,7 +74,7 @@ def new_user(team_name):
     conn.commit()
     return new_user_id.fetchone()
 
-def this_round():
+def this_round(conn):
     """
     Return this round's scores from the game table.
 
@@ -81,3 +84,14 @@ def this_round():
     latest_games = "select * from Game;"
     return conn.execute(latest_games)
 
+def update_games(records, conn):
+    delete_games = "delete from Game where 1=1;"
+    insert_games = """
+                insert into Game values (
+                    :year, :round,
+                    :home_name, :home_score, :home_logo_url,
+                    :away_name, :away_score, :away_logo_url);"""
+
+    conn.execute(delete_games)
+    conn.executemany(insert_games, records)
+    conn.commit()

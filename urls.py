@@ -1,7 +1,17 @@
-from bottle import redirect, request, response, route, template
-from models import this_round, new_user
+from bottle import abort, redirect, request, response, route, template
+from models import this_round, new_user, create_db_and_get_connection
+from models import update_games
 
 from utils import strip_tags
+import settings
+import json
+
+#-------------------
+# Setup the database here.
+
+conn = create_db_and_get_connection(settings.DB_NAME)
+
+#-------------------
 
 def register_urls():
     """
@@ -29,7 +39,7 @@ def index():
     user has a cookie or not. We use javascript on the client side to check the
     cookie and selectively show the scores.
     """
-    return template("index", games=this_round().fetchall())
+    return template("index", games=this_round(conn).fetchall())
 
 @route('/', method="POST")
 def index():
@@ -39,9 +49,25 @@ def index():
         return redirect('/')
 
     user_team = strip_tags(user_team)
-    new_user(user_team)
+    new_user(user_team, conn)
 
     response.set_cookie('not_my_team_name', user_team,
                         max_age=3600*24*365)
+    redirect('/')
+
+@route('/update/games/', method="POST")
+def set_games():
+    try:
+        key = request.params['key']
+        records = request.params['records']
+    except KeyError:
+        return abort(400, 'Bad Request')
+
+    if not key == settings.POST_KEY:
+        return abort(403, "user key invalid")
+
+    games = json.loads(records)
+    update_games(games, conn)
+
     redirect('/')
 
