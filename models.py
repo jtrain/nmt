@@ -62,10 +62,14 @@ conn.executescript(Game)
 conn.executescript(User)
 conn.commit()
 
-def new_user(team_id):
-    create_user = "insert into User values (null, ?);select last_insert_row();"
-    new_user_id = conn.executescript(create_user, team_id)
-    return new_user_id
+def new_user(team_name):
+    create_user = "insert into User values (null, ?);"
+    conn.execute(create_user, (team_name,))
+
+    get_user_id ="select last_insert_row();"
+    new_user_id = conn.execute(get_user_id)
+    conn.commit()
+    return new_user_id.fetchone()
 
 def this_round():
     """

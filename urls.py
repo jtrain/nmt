@@ -1,5 +1,7 @@
-from bottle import request, route, template
-from models import this_round
+from bottle import redirect, request, response, route, template
+from models import this_round, new_user
+
+from utils import strip_tags
 
 def register_urls():
     """
@@ -27,14 +29,19 @@ def index():
     user has a cookie or not. We use javascript on the client side to check the
     cookie and selectively show the scores.
     """
-    if request.method == "GET":
-        return template("index", games=this_round().fetchall())
+    return template("index", games=this_round().fetchall())
 
-    elif request.method == "POST":
-        user_team = request.params.get("team")
-        if not user_team:
-            return template("index", games=this_round().fetchall())
+@route('/', method="POST")
+def index():
+    user_team = request.params.get("team")
+    if not user_team:
+        # a malformed POST - didn't select a team.
+        return redirect('/')
 
+    user_team = strip_tags(user_team)
+    new_user(user_team)
 
-
+    response.set_cookie('not_my_team_name', user_team,
+                        max_age=3600*24*365)
+    redirect('/')
 
