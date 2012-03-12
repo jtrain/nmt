@@ -64,7 +64,7 @@
           y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
           x=x.replace(/^\s+|\s+$/g,"");
           if (x==c_name) {
-            return unescape(y).replace(/"/g, '').replace(/ /g, '-');
+            return unescape(y).replace(/"/g, '');
           }
         }
       }
@@ -75,15 +75,16 @@
        $('.pick').removeClass('hidden');
      } else {
        // hide the ?s for games you want to see and show the scores.
-       $('.noscore').not('.' + team).addClass('hidden');
-       $('.score').not('.' + team).removeClass('hidden');
+       var teamclass = team.replace(/ /g, '-');
+       $('.noscore').not('.' + teamclass).addClass('hidden');
+       $('.score').not('.' + teamclass).removeClass('hidden');
 
        // now show the entire results container.
        $('.results').removeClass('hidden');
 
        // add a message about which team rocks.
        $('.brand').after("<p class='navbar-text'>"
-                         + getCookie('not_my_team_name') + " rocks!</p>");
+                         + team + " rocks!</p>");
      }
     </script>
   </body>
