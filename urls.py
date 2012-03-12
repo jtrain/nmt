@@ -31,6 +31,14 @@ def register_urls():
     """
     pass
 
+@route('/switch', name='switch')
+def switch():
+    """
+    Remove the cookie and redirect to home.
+    """
+    response.delete_cookie('not_my_team_name')
+    return redirect('/')
+
 @route('/',name='index')
 def index():
     """

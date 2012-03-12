@@ -79,7 +79,8 @@
 
        // add a message about which team rocks.
        $('.brand').after("<p class='navbar-text'>"
-                         + team + " rocks!</p>");
+                         + team + " rocks!" 
+                         + " (not <a href='/switch' title='change teams'>your team</a>?)</p>");
      }
     </script>
   </body>
