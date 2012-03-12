@@ -82,7 +82,8 @@
        $('.results').removeClass('hidden');
 
        // add a message about which team rocks.
-       $('.brand').after("<p class='navbar-text pull-right'>" + team + " rocks!</p>");
+       $('.brand').after("<p class='navbar-text pull-right'>"
+                         + getCookie('not_my_team_name') + " rocks!</p>");
      }
     </script>
   </body>
