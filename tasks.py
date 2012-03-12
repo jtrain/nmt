@@ -6,6 +6,8 @@ import json
 import re
 import urllib2
 import sqlite3
+import random
+import time
 
 from BeautifulSoup import BeautifulSoup
 import requests
@@ -92,6 +94,9 @@ def store_games_in_db(year, weekno, games):
                 'key': settings.POST_KEY})
 
 if __name__ == '__main__':
+    backoff = random.randint(0, 10)
+    time.sleep(backoff * 60)
+
     # find the week number.
     soup = get_url_as_soup(settings.SCRAPE_URL)
     current_week = get_current_week(soup)

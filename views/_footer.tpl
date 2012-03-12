@@ -1,3 +1,3 @@
 <div class="legal">
-    Team Strong.
+    Team Strong. powered by cron.
 </div>
