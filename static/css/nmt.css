@@ -6,6 +6,7 @@ td.home, th.home {
 }
 td.score, th.score {
     text-align:center;
+    width:40px;
 }
 td.away, th.away {
     text-align:left;
