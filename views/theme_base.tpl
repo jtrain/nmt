@@ -78,8 +78,12 @@
        $('.results').removeClass('hidden');
 
        // add a message about which team rocks.
+       var plural = 's';
+       if (team.charAt(team.length - 1) === 's') {
+         plural = '';
+       }
        $('.brand').after("<p class='navbar-text'>"
-                         + team + " rocks!" 
+                         + team + " rock" + plural + "!"
                          + " (not <a href='/switch' title='change teams'>your team</a>?)</p>");
      }
     </script>
