@@ -15,3 +15,13 @@ td.away, th.away {
 td .btn, table {
   width: 100%;
 }
+
+p.navbar-text {
+  float: right;
+}
+
+@media (max-width: 480px) {
+  p.navbar-text {
+    float: left;
+  }
+}
