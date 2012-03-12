@@ -6,9 +6,8 @@
 <form class="pick hidden" method="POST" action="/">
   <div class='row-fluid'>
     <div class="span12">
-      <div class="hero-unit">
         <h2>English Premier League Pick your team!</h2>
-        <table class='game'>
+        <table class='game table table-bordered table-striped'>
           %for game in games:
             <tr>
               <td>
@@ -25,14 +24,12 @@
           %end
         </table>
       </div>
-    </div>
   </div>
 </form>
   <div class='row-fluid results hidden'>
     <div class="span12">
-      <div class="hero-unit">
         <h2>English Premier League Game Results</h2>
-        <table class="game table table-striped">
+        <table class="game table table-bordered table-striped">
           <thead>
            <tr><th class="home">Home</th><th class="score">vs</th><th class="away">Away</th></tr>
           </thead>
@@ -63,6 +60,5 @@
           %end
           </tbody>
         </table>
-      </div>
     </div>
   </div>
