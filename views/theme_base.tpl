@@ -32,11 +32,6 @@
             <span class="icon-bar"></span>
           </a>
           <a class="brand" href="{{ get_url('index') }}">{{ sitename }}</a>
-          <div class="nav-collapse">
-            <ul class="nav">
-              <li class="active"><a href="{{get_url('index')}}">Home</a></li>
-            </ul>
-          </div><!--/.nav-collapse -->
         </div>
       </div>
     </div>
