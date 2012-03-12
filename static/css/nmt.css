@@ -1,13 +1,13 @@
 table.game{
     width:100%;
 }
-td.home {
+td.home, th.home {
     text-align:right;
 }
-td.score {
+td.score, th.score {
     text-align:center;
 }
-td.away {
+td.away, th.away {
     text-align:left;
 }
 

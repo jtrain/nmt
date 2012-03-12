@@ -7,7 +7,7 @@
   <div class='row-fluid'>
     <div class="span12">
       <div class="hero-unit">
-        <h1>Pick your team!</h1>
+        <h2>English Premier League Pick your team!</h2>
         <table class='game'>
           %for game in games:
             <tr>
@@ -33,6 +33,10 @@
       <div class="hero-unit">
         <h2>English Premier League Game Results</h2>
         <table class="game table table-striped">
+          <thead>
+           <tr><th class="home">Home</th><th class="score">vs</th><th class="away">Away</th></tr>
+          </thead>
+          <tbody>
           %for game in games:
             <tr>
               <td class='home'>
@@ -57,6 +61,7 @@
               </td>
             </tr>
           %end
+          </tbody>
         </table>
       </div>
     </div>
