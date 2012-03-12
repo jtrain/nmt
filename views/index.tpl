@@ -31,7 +31,7 @@
   <div class='row-fluid results hidden'>
     <div class="span12">
       <div class="hero-unit">
-        <h1>Game Results</h1>
+        <h2>English Premier League Game Results</h2>
         <table class="game table table-striped">
           %for game in games:
             <tr>
