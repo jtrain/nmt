@@ -44,7 +44,7 @@ def index():
     user has a cookie or not. We use javascript on the client side to check the
     cookie and selectively show the scores.
     """
-    return template("index", title='Games!',
+    return template("index", title="Don't Show My Team",
             games=this_round(conn).fetchall())
 
 @route('/', method="POST")
