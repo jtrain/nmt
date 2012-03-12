@@ -80,6 +80,9 @@
 
        // now show the entire results container.
        $('.results').removeClass('hidden');
+
+       // add a message about which team rocks.
+       $('.brand').after("<p class='navbar-text pull-right'>" + team + " rocks!</p>");
      }
     </script>
   </body>
