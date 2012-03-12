@@ -8,7 +8,7 @@
         <!--[if lt IE 9]>
             <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
-          <link rel="shortcut icon" href="{{ get_url('static', path='favicon.ico') }}" />
+          <link rel="shortcut icon" href="{{ get_url('static', path='img/favicon.ico') }}" />
           <link rel="stylesheet" href="{{ get_url('static', path='css/bootstrap.css') }}">
 
           <style type="text/css">
