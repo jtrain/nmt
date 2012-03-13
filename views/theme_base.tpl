@@ -44,7 +44,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="{{ get_url('index', league='') }}">{{ sitename }}</a>
+          <a class="brand" href="{{ get_url('league', league='') }}">{{ sitename }}</a>
         </div>
       </div>
     </div>
@@ -96,9 +96,11 @@
        if (team.charAt(team.length - 1) === 's') {
          plural = '';
        }
+       var switchurl = "'/" + league + "/switch'";
        $('.brand').after("<p class='navbar-text'>"
                          + team + " rock" + plural + "!"
-                         + " (not <a href='/switch' title='change teams'>your team</a>?)</p>");
+                         + " (not <a href=" + switchurl
+                         + " title='change teams'>your team</a>?)</p>");
      }
     </script>
   </body>

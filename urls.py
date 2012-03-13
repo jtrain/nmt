@@ -31,7 +31,7 @@ def register_urls():
     """
     pass
 
-@route('/switch/:league', name='switch')
+@route('/:league/switch', name='switch')
 def switch(league):
     """
     Remove the cookie and redirect to home.
@@ -39,8 +39,8 @@ def switch(league):
     response.delete_cookie(league)
     return redirect('/%s' % league)
 
-@route('/:league',name='index')
-def index(league):
+@route('/:league',name='league')
+def league(league):
     """
     Home page, if the user doesn't have a cookie we will show them a list of
     teams that they can select from.
@@ -52,11 +52,11 @@ def index(league):
     user has a cookie or not. We use javascript on the client side to check the
     cookie and selectively show the scores.
     """
-    return template("index", title="Don't Show My Team",
+    return template("league", title="Don't Show My Team",
             games=this_round(league, conn).fetchall())
 
 @route('/:league', method="POST")
-def index(league):
+def league(league):
     print league
     user_team = request.params.get("team")
     if not user_team:
@@ -67,7 +67,7 @@ def index(league):
     new_user(user_team, conn)
 
     response.set_cookie(league, user_team,
-                        max_age=3600*24*365)
+                        max_age=3600*24*365, path='/%s'%league)
     redirect('/%s' % league)
 
 @route('/static/:path#.+#', name='static')
