@@ -2,7 +2,8 @@
 Models for Not My Team.
 
 Game:
-    games have a year,
+    games have a league,
+    a year,
     a round number,
     home team,
     away team,
