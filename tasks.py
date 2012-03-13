@@ -108,4 +108,4 @@ if __name__ == '__main__':
     year, games = get_games_from_fixture(soup)
 
     # save in the database.
-    store_games_in_db('EPL', year, current_week, games)
+    store_games_in_db('epl', year, current_week, games)
