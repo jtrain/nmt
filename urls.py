@@ -31,16 +31,16 @@ def register_urls():
     """
     pass
 
-@route('/switch', name='switch')
-def switch():
+@route('/switch/:league', name='switch')
+def switch(league):
     """
     Remove the cookie and redirect to home.
     """
-    response.delete_cookie('not_my_team_name')
-    return redirect('/')
+    response.delete_cookie(league)
+    return redirect('/%s' % league)
 
-@route('/',name='index')
-def index():
+@route('/:league',name='index')
+def index(league):
     """
     Home page, if the user doesn't have a cookie we will show them a list of
     teams that they can select from.
@@ -53,21 +53,22 @@ def index():
     cookie and selectively show the scores.
     """
     return template("index", title="Don't Show My Team",
-            games=this_round('EPL', conn).fetchall())
+            games=this_round(league, conn).fetchall())
 
-@route('/', method="POST")
-def index():
+@route('/:league', method="POST")
+def index(league):
+    print league
     user_team = request.params.get("team")
     if not user_team:
         # a malformed POST - didn't select a team.
-        return redirect('/')
+        return redirect('/%s' % league)
 
     user_team = strip_tags(user_team)
     new_user(user_team, conn)
 
-    response.set_cookie('not_my_team_name', user_team,
+    response.set_cookie(league, user_team,
                         max_age=3600*24*365)
-    redirect('/')
+    redirect('/%s' % league)
 
 @route('/static/:path#.+#', name='static')
 def static(path):

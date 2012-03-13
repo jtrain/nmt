@@ -3,7 +3,7 @@
 
 
 </style>
-<form class="pick hidden" method="POST" action="/">
+<form class="pick hidden" method="POST" action="/epl">
   <div class='row-fluid'>
     <div class="span12">
       <h2>English Premier League Pick your team!</h2>

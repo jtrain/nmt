@@ -44,7 +44,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="{{ get_url('index') }}">{{ sitename }}</a>
+          <a class="brand" href="{{ get_url('index', league='') }}">{{ sitename }}</a>
         </div>
       </div>
     </div>
@@ -77,7 +77,8 @@
         }
       }
 
-     var team = getCookie('not_my_team_name');
+     var league = window.location.pathname.slice(1);
+     var team = getCookie(league);
      if ( team === undefined){
        // show the pick team view.
        $('.pick').removeClass('hidden');
