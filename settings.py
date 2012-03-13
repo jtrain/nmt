@@ -13,6 +13,9 @@ def here(filename):
 DB_NAME = here('nmt.db')
 APP_URL = "http://127.0.0.1:8080/"
 
+LEAGUES = {'epl':'English Premier League',
+        'afl':'Australian Rules'}
+
 # scraper settings.
 
 SCRAPE_URL = ('http://theworldgame.sbs.com.au/'
