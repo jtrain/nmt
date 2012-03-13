@@ -71,7 +71,7 @@ def get_games_from_fixture(soup):
     year = int(rows[1].find('td', {'class': "c1"}).text.split()[-1])
     return year, games
 
-def store_games_in_db(year, weekno, games):
+def store_games_in_db(league, year, weekno, games):
     """
     Store the games into the database. Blow away all the old stuff and then add
     the new things.
@@ -79,6 +79,7 @@ def store_games_in_db(year, weekno, games):
     records = []
     for game in games:
         record = {
+                'league': league,
                 'year': year,
                 'round': weekno,
 
@@ -90,6 +91,7 @@ def store_games_in_db(year, weekno, games):
     requests.post(
             settings.APP_URL + settings.POST_HOOK,
             data={
+                'league':league,
                 'records': json.dumps(records),
                 'key': settings.POST_KEY})
 
@@ -106,4 +108,4 @@ if __name__ == '__main__':
     year, games = get_games_from_fixture(soup)
 
     # save in the database.
-    store_games_in_db(year, current_week, games)
+    store_games_in_db('EPL', year, current_week, games)

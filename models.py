@@ -23,6 +23,7 @@ from utils import make_namedtuple_factory
 Game = """
 create table if not exists Game (
 
+ league text,
  year integer,
  round integer,
 
@@ -34,17 +35,19 @@ create table if not exists Game (
  away_score integer,
  away_logo_url text,
 
- primary key (year, round, home_name, away_name)
+ primary key (league, year, round, home_name, away_name)
 
 );
 
+create index if not exists by_league on Game(
+ league);
 create index if not exists by_year on Game (
  year);
 create index if not exists by_round on Game (
  round);
 """
 GameRecord = namedtuple("Game",
-                   "year round "
+                   "league year round "
                    "home_name home_score home_logo_url "
                    "away_name away_score away_logo_url")
 
@@ -77,24 +80,24 @@ def new_user(team_name, conn):
     conn.commit()
     return new_user_id.fetchone()
 
-def this_round(conn):
+def this_round(league, conn):
     """
     Return this round's scores from the game table.
 
     The Game table only holds the latest game round.
     Newer rounds purge the table before entering their own game.
     """
-    latest_games = "select * from Game;"
-    return conn.execute(latest_games)
+    latest_games = "select * from Game where league=?;"
+    return conn.execute(latest_games, (league,))
 
-def update_games(records, conn):
-    delete_games = "delete from Game where 1=1;"
+def update_games(league, records, conn):
+    delete_games = "delete from Game where league=?;"
     insert_games = """
                 insert into Game values (
-                    :year, :round,
+                    :league, :year, :round,
                     :home_name, :home_score, :home_logo_url,
                     :away_name, :away_score, :away_logo_url);"""
 
-    conn.execute(delete_games)
+    conn.execute(delete_games, (league,))
     conn.executemany(insert_games, records)
     conn.commit()

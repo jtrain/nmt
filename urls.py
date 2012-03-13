@@ -53,7 +53,7 @@ def index():
     cookie and selectively show the scores.
     """
     return template("index", title="Don't Show My Team",
-            games=this_round(conn).fetchall())
+            games=this_round('EPL', conn).fetchall())
 
 @route('/', method="POST")
 def index():
@@ -79,6 +79,7 @@ def static(path):
 def set_games():
     try:
         key = request.params['key']
+        league = request.params['league']
         records = request.params['records']
     except KeyError:
         return abort(400, 'Bad Request')
@@ -87,6 +88,6 @@ def set_games():
         return abort(403, "user key invalid")
 
     games = json.loads(records)
-    update_games(games, conn)
+    update_games(league, games, conn)
 
     redirect('/')
