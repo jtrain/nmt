@@ -31,6 +31,14 @@ def register_urls():
     """
     pass
 
+@route('/',name='index')
+def index():
+    """
+    Show the list of competitions.
+    """
+    return template("index", title="Don't Show My Team",
+            leagues=settings.LEAGUES)
+
 @route('/:league/switch', name='switch')
 def switch(league):
     """
