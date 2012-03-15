@@ -16,6 +16,10 @@ td .btn, table {
   width: 100%;
 }
 
+a.btn{
+    display:block;
+}
+
 p.navbar-text {
   float: right;
 }

@@ -5,8 +5,8 @@
 </style>
 <form class="pick hidden" method="POST" action="/{{ league }}">
   <div class='row-fluid'>
-    <div class="span12">
-      <h2>{{ league_long_name }} Pick your team!</h2>
+    <div class="span4">
+      <h2>{{ league_long_name }}<br>Pick your team!</h2>
       <table class='game table table-bordered table-striped'>
         %for game in games:
           <tr>
@@ -27,8 +27,8 @@
   </div>
 </form>
 <div class='row-fluid results hidden'>
-  <div class="span12">
-    <h2>{{ league_long_name }} Game Results</h2>
+  <div class="span4">
+    <h2>{{ league_long_name }}<br>Game Results</h2>
     <table class="game table table-bordered table-striped">
       <thead>
        <tr><th class="home">Home</th><th class="score">vs</th><th class="away">Away</th></tr>
