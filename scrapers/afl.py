@@ -89,11 +89,13 @@ def get_games_from_fixture(client, round_id):
 
         if match.Status == '[undefined]':
             # If the game hasn't started, use this so the site will show 'vs'
-            home_score = ''
-            away_score = ''
+            home_score = None
+            away_score = None
         else:
             home_score = match.HomeScore
             away_score = match.AwayScore
+            if home_score == 0 and away_score == 0:
+                home_score = away_score = None
 
         games.append(Game(home, home_score, away, away_score))
 
