@@ -5,13 +5,15 @@ from collections import namedtuple
 import json
 import re
 import urllib2
+import os
 import sqlite3
-import random
-import time
+import sys
 
 from BeautifulSoup import BeautifulSoup
 import requests
 
+# put the parent dir on the system path.
+sys.path.append(os.path.join(os.path.dirname(__file__),'..'))
 import settings
 
 # blend in with the crowd..
@@ -96,9 +98,6 @@ def store_games_in_db(league, year, weekno, games):
                 'key': settings.POST_KEY})
 
 if __name__ == '__main__':
-    backoff = random.randint(0, 10)
-    time.sleep(backoff * 60)
-
     # find the week number.
     soup = get_url_as_soup(settings.SCRAPE_URL)
     current_week = get_current_week(soup)
