@@ -3,10 +3,13 @@ Use the afl SOAP web app (see here for details:
 http://xml.afl.com.au/mobilewebservices.asmx) to get the latest game scores.
 """
 from collections import namedtuple
-import datetime
 import json
-import suds
+import os
+import requests
+from suds.client import Client
+import sys
 
+sys.path.append(os.path.join(os.path.dirname(__file__),'..'))
 import settings
 
 Game = namedtuple("Game", "home_name home_score away_name away_score")
@@ -61,17 +64,15 @@ def get_current_season(client, competition_id):
     A short list of the more important ones are shown above.
     """
     result = client.service.GetCurrentSportSeasonByCompetition(competition_id)
-    dateformat = '%Y-%m-%d %H:%M:%S'
-    date = datetime.datetime.strptime(result.StartDate, dateformat)
-    return season_id, date.year
+    return result.Id, result.StartDate.year
 
-def get_current_week(client, season_id):
+def get_current_round_id(client, season_id):
     """Return the unique round id (it is unique across all sports and comps).
     """
     result = client.service.GetCurrentSportRoundBySeason(season_id)
     return result.Id
 
-def get_games(client, round_id):
+def get_games_from_fixture(client, round_id):
     """Return all the games for the unique round id key given.
 
     home_team, home_score, away_team, away_score
@@ -98,7 +99,7 @@ def get_games(client, round_id):
 
     return games
 
-def store_games_in_db(year, weekno, games):
+def store_games_in_db(league, year, weekno, games):
     """
     Store the games into the database. Create the records then post to the app
     server.
@@ -106,6 +107,7 @@ def store_games_in_db(year, weekno, games):
     records = []
     for game in games:
         record = {
+                'league': league,
                 'year': year,
                 'round': weekno,
 
@@ -117,22 +119,22 @@ def store_games_in_db(year, weekno, games):
     requests.post(
             settings.APP_URL + settings.POST_HOOK,
             data={
+                'league':league,
                 'records': json.dumps(records),
                 'key': settings.POST_KEY})
 
 if __name__ == '__main__':
-    backoff = random.randint(0, 10)
-    time.sleep(backoff * 60)
-
     # Create the client to the web app.
     client = get_client(url)
 
+    # Afl
+    # competition NAB cup.
+    competition_id = 26
     season_id, year = get_current_season(client, competition_id)
-    current_week = get_current_week(client, season_id)
+    current_round_id = get_current_round_id(client, season_id)
 
     # get games from the fixture table for this week.
-    games = get_games_from_fixture(soup)
+    games = get_games_from_fixture(client, current_round_id)
 
     # save in the database.
-    # TODO: Need to change the database format to allow more than one league.
-    # store_games_in_db(year, current_week, games)
+    store_games_in_db('afl', year, current_round_id, games)
