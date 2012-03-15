@@ -44,7 +44,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="{{ get_url('league', league='') }}">{{ sitename }}</a>
+          <a class="brand" href="{{ get_url('index') }}">{{ sitename }}</a>
         </div>
       </div>
     </div>

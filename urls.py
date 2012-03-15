@@ -60,7 +60,8 @@ def league(league):
     user has a cookie or not. We use javascript on the client side to check the
     cookie and selectively show the scores.
     """
-    return template("league", title="Don't Show My Team",
+    return template("league", title="Don't Show My Team", league=league,
+            league_long_name=settings.LEAGUES[league],
             games=this_round(league, conn).fetchall())
 
 @route('/:league', method="POST")
