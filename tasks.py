@@ -1,6 +1,7 @@
+import logging
 import random
-import subprocess
 import time
+import traceback
 import os
 import sys
 
@@ -15,11 +16,14 @@ sys.path.append(os.path.join(settings.APP_DIR, 'scrapers'))
 import sbs
 import afl
 
+logging.basicConfig(filename=settings.LOG_FILE, level=logging.ERROR)
+
 def scrape(module, league):
     try:
         module.scrape_league(league)
-    except:
-        # Do some logging.
+    except Exception as e:
+        a = traceback.format_exc()
+        logging.error(a)
         pass
 
 if __name__ == '__main__':
