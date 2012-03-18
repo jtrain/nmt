@@ -1,6 +1,16 @@
 import random
 import subprocess
 import time
+import os
+import sys
+
+try:
+    import settings
+except ImportError:
+    sys.path.append(os.path.dirname(__file__))
+    import settings
+
+APP_PYTHON = os.path.join(settings.APP_DIR, 'bin', 'python')
 
 def scrape(*args):
     call_args = ['python']
@@ -11,7 +21,8 @@ if __name__ == '__main__':
     time.sleep(backoff * 60)
 
     # English premier league
-    subprocess.call(['python','scrapers/sbs.py'])
+    # bundesliga
+    subprocess.call([APP_PYTHON, 'scrapers/sbs.py'])
 
     # afl
-    subprocess.call(['python','scrapers/afl.py'])
+    subprocess.call([APP_PYTHON, 'scrapers/afl.py'])
