@@ -6,6 +6,7 @@ import json
 import re
 import urllib2
 import os
+import posixpath
 import sqlite3
 import sys
 
@@ -15,6 +16,17 @@ import requests
 # put the parent dir on the system path.
 sys.path.append(os.path.join(os.path.dirname(__file__),'..'))
 import settings
+
+SBS_URL = 'http://theworldgame.sbs.com.au/'
+RESTULTS_PATH = 'stats/results/'
+SCRAPE_URL_WEEK = 'filterby/gameweek/week/%d'
+
+def complete_league_url(league_path):
+    return posixpath.join(SBS_URL, league_path, RESTULTS_PATH)
+
+LEAGUE_URLS = {'epl':complete_league_url('english-premier-league'),
+        'bundesliga':complete_league_url('germany-bundesliga')}
+
 
 # blend in with the crowd..
 opener = urllib2.build_opener()
@@ -97,14 +109,28 @@ def store_games_in_db(league, year, weekno, games):
                 'records': json.dumps(records),
                 'key': settings.POST_KEY})
 
-if __name__ == '__main__':
+def scrape_league(league):
+    """Does the scrape of the league and sends it to the db.
+
+    Pass in the unque string for the league you want to scrape.
+    """
     # find the week number.
-    soup = get_url_as_soup(settings.SCRAPE_URL)
+    base_scrape_url = LEAGUE_URLS[league]
+    soup = get_url_as_soup(base_scrape_url)
     current_week = get_current_week(soup)
 
     # get games from the fixture table for this week.
-    soup = get_url_as_soup(settings.SCRAPE_URL_WEEK % current_week)
+    soup = get_url_as_soup(posixpath.join(base_scrape_url,SCRAPE_URL_WEEK)
+                            % current_week)
     year, games = get_games_from_fixture(soup)
 
     # save in the database.
-    store_games_in_db('epl', year, current_week, games)
+    store_games_in_db(league, year, current_week, games)
+
+if __name__ == '__main__':
+
+    # English Premier league
+    scrape_league('epl')
+
+    # bundesliga
+    scrape_league('bundesliga')
