@@ -10,19 +10,25 @@ except ImportError:
     sys.path.append(os.path.dirname(__file__))
     import settings
 
-APP_PYTHON = os.path.join(settings.APP_DIR, 'bin', 'python')
+sys.path.append(os.path.join(settings.APP_DIR, 'scrapers'))
 
-def scrape(*args):
-    call_args = ['python']
-    s(call_args.extend(args))
+import sbs
+import afl
+
+def scrape(module, league):
+    try:
+        module.scrape_league(league)
+    except:
+        # Do some logging.
+        pass
 
 if __name__ == '__main__':
-    backoff = random.randint(0, 10)
-    time.sleep(backoff * 60)
+    # backoff = random.randint(0, 10)
+    # time.sleep(backoff * 60)
 
-    # English premier league
-    # bundesliga
-    subprocess.call([APP_PYTHON, 'scrapers/sbs.py'])
+    # sbs
+    scrape(sbs, 'epl')
+    scrape(sbs, 'bundesliga')
 
     # afl
-    subprocess.call([APP_PYTHON, 'scrapers/afl.py'])
+    scrape(afl,'afl')

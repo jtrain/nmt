@@ -16,6 +16,7 @@ Game = namedtuple("Game", "home_name home_score away_name away_score")
 
 url = 'http://xml.afl.com.au/mobilewebservices.asmx?WSDL'
 
+client = Client(url)
 
 # ========   App codes   =======
 #
@@ -50,11 +51,19 @@ url = 'http://xml.afl.com.au/mobilewebservices.asmx?WSDL'
 #            Id = 22
 #            Name = "AFL Finals Series"
 #         },
-
-def get_client(url):
-    """Create a suds client for getting data from a SOAP api.
+def get_comp_afl():
+    """Return the in progress competition (NAB cup or Finals or whatever)
     """
-    return Client(url)
+    # Afl premiership = code 1
+    return 1
+
+
+def get_comp(league):
+    """This will select the function to run to get the current competition for
+    the legue specified"""
+    if league == 'afl':
+        return get_comp_afl()
+
 
 def get_current_season(client, competition_id):
     """Return the unique id for the current season for the competition
@@ -125,13 +134,13 @@ def store_games_in_db(league, year, weekno, games):
                 'records': json.dumps(records),
                 'key': settings.POST_KEY})
 
-if __name__ == '__main__':
-    # Create the client to the web app.
-    client = get_client(url)
+def scrape_league(league):
+    """Does the scrape of the league and sends it to the db.
 
-    # Afl
-    # competition NAB cup.
-    competition_id = 26
+    Pass in the unque string for the league you want to scrape.
+    """
+
+    competition_id = get_comp(league)
     season_id, year = get_current_season(client, competition_id)
     current_round_id = get_current_round_id(client, season_id)
 
@@ -139,4 +148,5 @@ if __name__ == '__main__':
     games = get_games_from_fixture(client, current_round_id)
 
     # save in the database.
-    store_games_in_db('afl', year, current_round_id, games)
+    store_games_in_db(league, year, current_round_id, games)
+
