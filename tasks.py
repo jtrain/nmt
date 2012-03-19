@@ -27,8 +27,8 @@ def scrape(module, league):
         pass
 
 if __name__ == '__main__':
-    # backoff = random.randint(0, 10)
-    # time.sleep(backoff * 60)
+    backoff = random.randint(0, 10)
+    time.sleep(backoff * 60)
 
     # sbs
     scrape(sbs, 'epl')
