@@ -6,7 +6,11 @@ from models import update_games
 from utils import strip_tags
 import settings
 import json
+import logging
 
+logging.basicConfig(
+        filename=settings.LOG_FILE,
+        level=logging.ERROR)
 #-------------------
 # Setup the database here.
 
@@ -66,7 +70,7 @@ def league(league):
 
 @route('/:league', method="POST")
 def league(league):
-    print league
+    logging.errorleague
     user_team = request.params.get("team")
     if not user_team:
         # a malformed POST - didn't select a team.
@@ -87,6 +91,9 @@ def static(path):
 
 @route('/update/games/', method="POST")
 def set_games():
+    logging.error("params")
+    logging.error(request.params.items())
+    logging.error("\n\n")
     try:
         key = request.params['key']
         league = request.params['league']
@@ -98,6 +105,9 @@ def set_games():
         return abort(403, "user key invalid")
 
     games = json.loads(records)
+    logging.error("games from json.")
+    logging.error(games)
+    logging.error("\n\n")
     update_games(league, games, conn)
 
     redirect('/')
