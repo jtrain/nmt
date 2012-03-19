@@ -30,7 +30,9 @@ LEAGUE_URLS = {'epl':complete_league_url('english-premier-league'),
 
 # blend in with the crowd..
 opener = urllib2.build_opener()
-opener.addheaders = [('User-agent', settings.SCRAPE_USER_AGENT)]
+opener.addheaders = [
+        ('User-agent', settings.SCRAPE_USER_AGENT),
+        ('Cache-Control', 'max-age=0')]
 
 # to find the week number.
 re_weekno = re.compile('[\d]+')
