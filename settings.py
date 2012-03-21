@@ -14,8 +14,8 @@ DB_NAME = here('nmt.db')
 APP_URL = "http://127.0.0.1:8080/"
 
 LEAGUES = {'epl':'English Premier League',
-        # 'bundesliga':'Bundesliga',
-        'afl':'Australian Rules'}
+           'bundesliga':'Bundesliga',
+           'afl':'Australian Rules'}
 
 # time between scrapes in seconds.
 SCRAPE_FREQ = 3600

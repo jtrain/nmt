@@ -64,6 +64,12 @@
     %include js_base get_url=get_url
     <script type="text/javascript">
 
+  var keyStr = "ABCDEFGHIJKLMNOP" +
+               "QRSTUVWXYZabcdef" +
+               "ghijklmnopqrstuv" +
+               "wxyz0123456789+/" +
+               "=";
+
       function getCookie(c_name) {
         var i,x,y,ARRcookies=document.cookie.split(";");
         for (i=0;i<ARRcookies.length;i++) {
@@ -72,10 +78,11 @@
           y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
           x=x.replace(/^\s+|\s+$/g,"");
           if (x==c_name) {
-            return unescape(y).replace(/"/g, '');
+            return unescape(atob(y.replace(/"/g, '')));
           }
         }
       }
+     
 
      var league = window.location.pathname.slice(1);
      var team = getCookie(league);

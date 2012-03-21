@@ -1,3 +1,6 @@
+import json
+from base64 import b64encode
+
 from bottle import abort, redirect, request, response, route, template,\
                     SimpleTemplate, url, static_file
 from models import this_round, new_user, create_db_and_get_connection
@@ -5,7 +8,6 @@ from models import update_games
 
 from utils import strip_tags
 import settings
-import json
 
 #-------------------
 # Setup the database here.
@@ -64,6 +66,9 @@ def league(league):
             league_long_name=settings.LEAGUES[league],
             games=this_round(league, conn).fetchall())
 
+def cookie_safe(text):
+    return b64encode(text.decode('utf-8').encode('latin-1'))
+
 @route('/:league', method="POST")
 def league(league):
     user_team = request.params.get("team")
@@ -72,9 +77,8 @@ def league(league):
         return redirect('/%s' % league)
 
     user_team = strip_tags(user_team)
-    new_user(user_team, conn)
-
-    response.set_cookie(league, user_team,
+    new_user(user_team.decode('utf-8'), conn)
+    response.set_cookie(league, cookie_safe(user_team),
                         max_age=3600*24*365, path='/%s'%league)
     redirect('/%s' % league)
 
