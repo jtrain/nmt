@@ -128,6 +128,7 @@
 
      var league = window.location.pathname.slice(1);
      var team = getCookie(league);
+     try {
      if ( team === undefined) {
        // show the pick team view.
        $('.pick').removeClass('hidden');
@@ -152,6 +153,9 @@
                          + " title='change teams'>your team</a>?)</p>");
      } else {
        // show the pick team view.
+       $('.pick').removeClass('hidden');
+     }
+     } catch(err) {
        $('.pick').removeClass('hidden');
      }
        
