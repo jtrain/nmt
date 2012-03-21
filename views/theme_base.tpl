@@ -119,14 +119,19 @@
           }
         }
       }
+      function delCookie(name)
+      {
+        document.cookie = name + '=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
+      }
+     
      
 
      var league = window.location.pathname.slice(1);
      var team = getCookie(league);
-     if ( team === undefined){
+     if ( team === undefined) {
        // show the pick team view.
        $('.pick').removeClass('hidden');
-     } else {
+     } else if ($('.score').filter('.' + team.replace(/ /g, '-')).length > 0) {
        // hide the ?s for games you want to see and show the scores.
        var teamclass = team.replace(/ /g, '-');
        $('.noscore').not('.' + teamclass).addClass('hidden');
@@ -145,7 +150,11 @@
                          + team + " rock" + plural + "!"
                          + " (not <a href=" + switchurl
                          + " title='change teams'>your team</a>?)</p>");
+     } else {
+       // show the pick team view.
+       $('.pick').removeClass('hidden');
      }
+       
     </script>
   </body>
 </html>

@@ -79,7 +79,7 @@ def league(league):
     user_team = strip_tags(user_team)
     new_user(user_team.decode('utf-8'), conn)
     response.set_cookie(league, cookie_safe(user_team),
-                        max_age=3600*24*365, path='/%s'%league)
+                        max_age=3600*24*365, path='/%s' % league)
     redirect('/%s' % league)
 
 @route('/static/:path#.+#', name='static')

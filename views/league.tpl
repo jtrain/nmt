@@ -41,7 +41,9 @@
           </td>
           <td class='score'>
             %if game.home_score == None:
-                vs
+                <div class='noscore score {{ game.home_name.replace(" ", "-") }} 
+                            {{game.away_name.replace(" ", "-")}}'>
+                                    vs</div>
             %else:
                 <div class='score hidden {{game.home_name.replace(" ", "-")}}
                             {{game.away_name.replace(" ", "-")}}'>
