@@ -6,6 +6,7 @@ td.home, th.home {
 }
 td.score, th.score {
     text-align:center;
+    white-space:nowrap;
     max-width:60px;
     width:auto;
     min-width:40px;
