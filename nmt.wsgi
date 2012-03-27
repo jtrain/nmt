@@ -2,8 +2,9 @@
 
 import os,sys, bottle
 
-sys.path = ['/home/ubuntu/nmt/'] + sys.path
-os.chdir(os.path.dirname(__file__))
+app_path = os.path.dirname(os.path.abspath(__file__))
+sys.path = [app_path] + sys.path
+os.chdir(app_path)
 
 import runserver
 

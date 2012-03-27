@@ -7,6 +7,12 @@ def prod():
     env.remote_app_dir ='/home/ubuntu/nmt/'
     env.user = 'ubuntu'
 
+def prod():
+    HOST = 'psse.whit.com.au'
+    env.hosts = [HOST]
+    env.remote_app_dir ='/home/ubuntu/nmt-preprod/'
+    env.user = 'ubuntu'
+
 def deploy():
     require('hosts', provided_by=[prod])
     require('user', provided_by=[prod,])

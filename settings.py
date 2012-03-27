@@ -28,4 +28,7 @@ POST_HOOK = 'update/games/'
 
 LOG_FILE = os.path.join(APP_DIR, 'scrape_errors.log')
 if socket.gethostname().lower().startswith('ip'):
-    from prod_settings import *
+    if 'preprod' in os.path.abspath(__file__):
+        from preprod_settings import *
+    else:
+        from prod_settings import *
