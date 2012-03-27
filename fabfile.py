@@ -7,7 +7,7 @@ def prod():
     env.remote_app_dir ='/home/ubuntu/nmt/'
     env.user = 'ubuntu'
 
-def prod():
+def preprod():
     HOST = 'psse.whit.com.au'
     env.hosts = [HOST]
     env.remote_app_dir ='/home/ubuntu/nmt-preprod/'
