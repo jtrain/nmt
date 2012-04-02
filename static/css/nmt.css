@@ -23,12 +23,9 @@ a.btn{
     display:block;
 }
 
-p.navbar-text {
-  float: right;
-}
 
-@media (max-width: 480px) {
-  p.navbar-text {
-    float: left;
-  }
+.repick.navbar-text {
+    line-height:20px;
+    padding-left: 5px;
+    clear:left;
 }

@@ -40,6 +40,8 @@
       <div class="navbar-inner">
         <div class="container">
           <a class="brand" href="{{ get_url('index') }}">{{ sitename }}</a>
+          <div class="repick repick-league navbar-text">Change your <a class='label label-info' href="{{ get_url('index') }}">League</a></div>
+          <div class="repick repick-team navbar-text"><span class='team-rocks'>You rock!</span></div>
         </div>
       </div>
     </div>
@@ -142,10 +144,10 @@
          plural = '';
        }
        var switchurl = "'/" + league + "/switch'";
-       $('.brand').after("<p class='navbar-text'>"
+       $('span.team-rocks').replaceWith("<span class='team-rocks'>"
                          + team + " rock" + plural + "!"
-                         + " (not <a href=" + switchurl
-                         + " title='change teams'>your team</a>?)</p>");
+                         + " (not <a class='label label-info' href=" + switchurl
+                         + " title='change teams'>your team</a>?)</span>");
      } else {
        // show the pick team view.
        $('.pick').removeClass('hidden');
