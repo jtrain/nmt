@@ -12,10 +12,6 @@
           <link rel="stylesheet" href="{{ get_url('static', path='css/bootstrap.css') }}">
 
           <style type="text/css">
-            body {
-              padding-top: 60px;
-              padding-bottom: 40px;
-            }
           </style>
           <link href="{{ get_url('static', path="css/bootstrap-responsive.css") }}" rel="stylesheet">
           <link rel="stylesheet" href="{{ get_url('static', path='css/nmt.css') }}">
@@ -36,7 +32,7 @@
     </head>
     <body>
 
-    <div class="navbar navbar-fixed-top">
+    <div class="navbar">
       <div class="navbar-inner">
         <div class="container">
           <a class="brand" href="{{ get_url('index') }}">{{ sitename }}</a>
