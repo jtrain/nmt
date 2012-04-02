@@ -10,9 +10,6 @@
         <![endif]-->
           <link rel="shortcut icon" href="{{ get_url('static', path='img/favicon.ico') }}" />
           <link rel="stylesheet" href="{{ get_url('static', path='css/bootstrap.css') }}">
-
-          <style type="text/css">
-          </style>
           <link href="{{ get_url('static', path="css/bootstrap-responsive.css") }}" rel="stylesheet">
           <link rel="stylesheet" href="{{ get_url('static', path='css/nmt.css') }}">
           <script type="text/javascript">

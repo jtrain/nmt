@@ -1,8 +1,4 @@
 %rebase theme_base title=title
-<style>
-
-
-</style>
 <form class="pick hidden" method="POST" action="/{{ league }}">
   <div class='row'>
     <div class="span4">
