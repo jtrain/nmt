@@ -129,6 +129,26 @@
      return unescape(output);
   }
 
+
+  function initial_league() {
+    var url_path = window.location.pathname.slice(1);
+    if (url_path === '') {
+        league = get_cookie(last_league);
+        if (league === undefined) {
+            league = '';
+        }
+        return league;
+    }
+    else {
+        for (leag in leagues){
+            if (url_path === leag){
+                return url_leag;
+            }
+        }
+        return '';
+      }
+    }
+
       function getCookie(c_name) {
         var i,x,y,ARRcookies=document.cookie.split(";");
         for (i=0;i<ARRcookies.length;i++) {
@@ -145,23 +165,25 @@
       {
         document.cookie = name + '=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
       }
-     
-     
 
-     var league = window.location.pathname.slice(1);
-     var team = getCookie(league);
+    function setCookie(c_name, val) {
+        document.cookie = c_name + '=' + encode64(val)
+            + ";path='/';max-age=" + 3600*24*365;
+    }
+
+    function update_results(league, team) {
      try {
      if ( team === undefined) {
        // show the pick team view.
-       $('.pick').removeClass('hidden');
+       $('.pick.' + league).removeClass('hidden');
      } else if ($('.score').filter('.' + team.replace(/ /g, '-')).length > 0) {
        // hide the ?s for games you want to see and show the scores.
        var teamclass = team.replace(/ /g, '-');
-       $('.noscore').not('.' + teamclass).addClass('hidden');
-       $('.score').not('.' + teamclass).removeClass('hidden');
+       $('.noscore.' + league).not('.' + teamclass).addClass('hidden');
+       $('.score.' + league).not('.' + teamclass).removeClass('hidden');
 
        // now show the entire results container.
-       $('.results').removeClass('hidden');
+       $('.results.' + league).removeClass('hidden');
 
        // add a message about which team rocks.
        var plural = 's';
@@ -175,12 +197,27 @@
                          + " title='change teams'>your team</a>?)</span>");
      } else {
        // show the pick team view.
-       $('.pick').removeClass('hidden');
+       $('.pick.' + league).removeClass('hidden');
      }
      } catch(err) {
-       $('.pick').removeClass('hidden');
+       $('.pick.' + league).removeClass('hidden');
      }
-       
+    }
+
+    function update_league(league) {
+        var team;
+        try {
+            if (league === undefined) {
+                $('.league-select').removeClass('hidden');
+            }
+            else if ($('.league-block').filter('.' + league).length > 0) {
+                update_results(league, getCookie(league));
+                $('.league-block.' + league).removeClass('hidden');
+            }
+        } catch(err) {
+            $('.league-select').removeClass('hidden');
+        }
+    }
     </script>
   </body>
 </html>
