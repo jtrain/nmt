@@ -130,24 +130,6 @@
   }
 
 
-  function initial_league() {
-    var url_path = window.location.pathname.slice(1);
-    if (url_path === '') {
-        league = get_cookie(last_league);
-        if (league === undefined) {
-            league = '';
-        }
-        return league;
-    }
-    else {
-        for (leag in leagues){
-            if (url_path === leag){
-                return url_leag;
-            }
-        }
-        return '';
-      }
-    }
 
       function getCookie(c_name) {
         var i,x,y,ARRcookies=document.cookie.split(";");
@@ -169,6 +151,25 @@
     function setCookie(c_name, val) {
         document.cookie = c_name + '=' + encode64(val)
             + ";path='/';max-age=" + 3600*24*365;
+    }
+
+    function initial_league() {
+        var url_path = window.location.pathname.slice(1);
+        if (url_path === '') {
+            league = get_cookie(last_league);
+            if (league === undefined) {
+                league = '';
+            }
+            return league;
+        }
+        else {
+            for (leag in leagues){
+                if (url_path === leag){
+                    return url_leag;
+                }
+            }
+            return '';
+        }
     }
 
     function update_results(league, team) {
