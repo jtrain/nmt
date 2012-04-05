@@ -8,7 +8,7 @@
             <button type='button'
                     value='{{ long_name }}'
                     class="btn select"
-                    onclick="update_league('{{ league }}')">{{ long_name }}</button>
+                    onclick="pick_league('{{ league }}')">{{ long_name }}</button>
         </p>
       %end
   </div>

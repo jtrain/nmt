@@ -223,6 +223,11 @@
         }
     }
 
+    function pick_league(league) {
+        setCookie('cur_league', league);
+        update_league(league);
+    }
+
     </script>
   </body>
 </html>
