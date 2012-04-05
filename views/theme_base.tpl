@@ -33,11 +33,11 @@
       <div class="navbar-inner">
         <div class="container">
           <a class="brand" href="{{ get_url('index') }}">{{ sitename }}</a>
-          <div class="repick repick-league navbar-text">Change your <button class='label label-info'
+          <div class="repick repick-league navbar-text hidden">Change your <button class='label label-info'
                 value='League'
                 onclick="change_league()"
                 type='button'>League</button></div>
-          <div class="repick repick-team navbar-text"><span class='team-rocks'>You rock!</span></div>
+          <div class="repick repick-team navbar-text hidden"><span class='team-rocks'>You rock!</span></div>
         </div>
       </div>
     </div>
@@ -184,6 +184,7 @@
                          + " onclick='change_team()'"
                          + " value='your team'"
                          + " type='button'>your team</button>?)</span>");
+       $('.repick-team').removeClass('hidden');
      } else {
        // show the pick team view.
        $('.pick.' + league).removeClass('hidden');
@@ -202,6 +203,7 @@
                 update_results(league, getCookie(league));
                 $('.league-select').addClass('hidden');
                 $('.league-block.' + league).removeClass('hidden');
+                $('.repick-league').removeClass('hidden');
             }
         } catch(err) {
             $('.league-select').removeClass('hidden');
@@ -233,6 +235,8 @@
 
         if (league) {
             $('.league-block.' + league).addClass('hidden');
+            $('.repick-league').addClass('hidden');
+            $('.repick-team').addClass('hidden');
 
             update_league('');
         }
@@ -246,6 +250,8 @@
         delCookie(league);
         $('.score.' + league).not('.' + teamclass).addClass('hidden');
         $('.noscore.' + league).not('.' + teamclass).removeClass('hidden');
+
+        $('.repick-team').addClass('hidden');
 
         update_results(league, '');
     }
