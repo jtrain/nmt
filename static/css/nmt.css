@@ -31,6 +31,14 @@ a.btn{
     font-size:11px;
  }
 
+.my-nav {
+    padding-bottom: 5px;
+}
+
+.my-brand {
+    padding-bottom:7px !important;
+}
+
 .repick.navbar-text {
     line-height:20px;
     padding-left: 5px;
