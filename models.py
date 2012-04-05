@@ -13,7 +13,7 @@ Game:
 User:
     team
 """
-from collections import namedtuple
+from collections import namedtuple, defaultdict
 import sqlite3
 import settings
 
@@ -80,6 +80,17 @@ def new_user(team_name, conn):
     new_user_id = conn.execute(get_user_id)
     conn.commit()
     return new_user_id.fetchone()
+
+def these_rounds(conn):
+    """
+    Return all the current games in a dict by league.
+    """
+    games_dict = defaultdict(list)
+
+    for game in conn.execute('select * from Game').fetchall():
+        games_dict[game.league].append(game)
+
+    return games_dict
 
 def this_round(league, conn):
     """
