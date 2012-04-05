@@ -38,7 +38,7 @@ def index():
     """
     Show the list of competitions.
     """
-    return template("index", title="Don't Show My Team", league='',
+    return template("index", title="Don't Show My Team",
             leagues=settings.LEAGUES,
             games=these_rounds(conn))
 
@@ -63,7 +63,7 @@ def league(league):
     if league not in settings.LEAGUES.keys():
         return abort(404)
 
-    return template("index", title="Don't Show My Team", league=league,
+    return template("index", title="Don't Show My Team",
             leagues=settings.LEAGUES,
             games=these_rounds(conn))
 
