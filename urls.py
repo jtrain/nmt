@@ -3,8 +3,8 @@ from base64 import b64encode
 
 from bottle import abort, redirect, request, response, route, template,\
                     SimpleTemplate, url, static_file
-from models import this_round, new_user, create_db_and_get_connection
-from models import update_games
+from models import this_round, these_rounds, new_user
+from models import update_games, create_db_and_get_connection
 
 from utils import strip_tags
 import settings
@@ -38,8 +38,9 @@ def index():
     """
     Show the list of competitions.
     """
-    return template("index", title="Don't Show My Team",
-            leagues=settings.LEAGUES)
+    return template("index", title="Don't Show My Team", league='',
+            leagues=settings.LEAGUES,
+            games=these_rounds(conn))
 
 @route('/:league/switch', name='switch')
 def switch(league):
@@ -55,16 +56,16 @@ def league(league):
     Home page, if the user doesn't have a cookie we will show them a list of
     teams that they can select from.
 
-    Picking a team will issue a POST command with the name of the team selected.
-    We need to respond to the POST with a cookie that has the team name inside.
-
     The home page will always serve the same content regardless of whether the
     user has a cookie or not. We use javascript on the client side to check the
-    cookie and selectively show the scores.
+    cookie, select the league and selectively show the scores.
     """
-    return template("league", title="Don't Show My Team", league=league,
-            league_long_name=settings.LEAGUES[league],
-            games=this_round(league, conn).fetchall())
+    if league not in settings.LEAGUES.keys():
+        return abort(404)
+
+    return template("index", title="Don't Show My Team", league=league,
+            leagues=settings.LEAGUES,
+            games=these_rounds(conn))
 
 def cookie_safe(text):
     return b64encode(text.decode('utf-8').encode('latin-1'))
