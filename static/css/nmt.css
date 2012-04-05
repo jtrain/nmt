@@ -23,6 +23,9 @@ a.btn{
     display:block;
 }
 
+button.select {
+    width: 100%;
+}
 
 .repick button.btn{
     margin:0;
