@@ -186,6 +186,9 @@
        // now show the entire results container.
        $('.results.' + league).removeClass('hidden');
 
+       // hide the pick screen
+       $('.pick.' + league).addClass('hidden');
+
        // add a message about which team rocks.
        var plural = 's';
        if (team.charAt(team.length - 1) === 's') {
@@ -206,19 +209,20 @@
     }
 
     function update_league(league) {
-        var team;
         try {
             if (league === undefined) {
                 $('.league-select').removeClass('hidden');
             }
             else if ($('.league-block').filter('.' + league).length > 0) {
                 update_results(league, getCookie(league));
+                $('.league-select').addClass('hidden');
                 $('.league-block.' + league).removeClass('hidden');
             }
         } catch(err) {
             $('.league-select').removeClass('hidden');
         }
     }
+
     </script>
   </body>
 </html>

@@ -1,19 +1,22 @@
 %rebase theme_base title=title
 
-<div class='row-fluid'>
+<div class='row-fluid league-select'>
   <div class="span4">
     <h2>Pick your game!</h2>
       %for league, long_name in leagues.items():
         <p>
-            <a href="/{{ league }}" class="btn">{{ long_name }}</a>
+            <button type='button'
+                    value='{{ long_name }}'
+                    class="btn select"
+                    onclick="update_league('{{ league }}')">{{ long_name }}</button>
         </p>
       %end
   </div>
 </div>
 
 %for league, long_name in leagues.items():
-  <div class='league {{ league }} hidden'>
-    <form class="pick hidden" method="POST" action="/{{ league }}">
+  <div class='league-block {{ league }} hidden'>
+    <form class="pick {{ league }} hidden" method="POST" action="/{{ league }}">
       <div class='row'>
         <div class="span4">
           <h2>{{ long_name }}<br>Pick your team!</h2>
@@ -23,12 +26,14 @@
                 <td>
                   <button value="{{ game.home_name }}"
                           class="btn select" name="team"
-                          type="sumit">{{ game.home_name}}</button>
+                          onclick="update_results('{{ league }}', '{{ game.home_name }}')"
+                          type="button">{{ game.home_name}}</button>
                 </td>
                 <td>
                   <button value="{{ game.away_name }}"
                           class="btn select" name="team"
-                          type="sumit">{{ game.away_name}}</button>
+                          onclick="update_results('{{ league }}', '{{ game.away_name }}')"
+                          type="button">{{ game.away_name}}</button>
                 </td>
               </tr>
             %end
@@ -36,7 +41,7 @@
         </div>
       </div>
     </form>
-    <div class='row results hidden'>
+    <div class='row results {{ league }} hidden'>
       <div class="span4">
         <h2>{{ long_name }}<br>Game Results</h2>
         <table class="game table table-bordered table-striped">
@@ -51,15 +56,15 @@
               </td>
               <td class='score'>
                 %if game.home_score == None:
-                    <div class='noscore score {{ game.home_name.replace(" ", "-") }} 
+                    <div class='noscore score {{ league }} {{ game.home_name.replace(" ", "-") }}
                                 {{game.away_name.replace(" ", "-")}}'>
                                         vs</div>
                 %else:
-                    <div class='score hidden {{game.home_name.replace(" ", "-")}}
+                    <div class='score {{ league }} hidden {{game.home_name.replace(" ", "-")}}
                                 {{game.away_name.replace(" ", "-")}}'>
                         {{ game.home_score }} - {{ game.away_score }}
                     </div>
-                    <div class='noscore {{game.home_name.replace(" ", "-")}}
+                    <div class='noscore {{ league }} {{game.home_name.replace(" ", "-")}}
                                 {{game.away_name.replace(" ", "-")}}'>
                         ? - ?
                     </div>
