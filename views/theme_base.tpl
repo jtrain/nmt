@@ -253,6 +253,8 @@
         $('.score.' + league).not('.' + teamclass).addClass('hidden');
         $('.noscore.' + league).not('.' + teamclass).removeClass('hidden');
 
+        $('.results.' + league).addClass('hidden');
+
         $('.repick-team').addClass('hidden');
 
         update_results(league, '');
