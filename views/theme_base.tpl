@@ -228,6 +228,10 @@
         update_league(league);
     }
 
+    function pick_team(league, team) {
+        setCookie(league, team);
+        update_results(league, team);
+    }
     </script>
   </body>
 </html>

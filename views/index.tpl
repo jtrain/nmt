@@ -26,13 +26,13 @@
                 <td>
                   <button value="{{ game.home_name }}"
                           class="btn select" name="team"
-                          onclick="update_results('{{ league }}', '{{ game.home_name }}')"
+                          onclick="pick_team('{{ league }}', '{{ game.home_name }}')"
                           type="button">{{ game.home_name}}</button>
                 </td>
                 <td>
                   <button value="{{ game.away_name }}"
                           class="btn select" name="team"
-                          onclick="update_results('{{ league }}', '{{ game.away_name }}')"
+                          onclick="pick_team('{{ league }}', '{{ game.away_name }}')"
                           type="button">{{ game.away_name}}</button>
                 </td>
               </tr>
