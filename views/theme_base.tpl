@@ -32,7 +32,7 @@
     <div class="navbar">
       <div class="navbar-inner">
         <div class="container my-nav">
-          <a class="brand my-brand" href="{{ get_url('index') }}">{{ sitename }}</a>
+          <a class="brand my-brand" href="javascript:void(0)" onclick='change_league()'>{{ sitename }}</a>
           <div class="repick repick-league navbar-text hidden">Change your <button class='btn btn-primary'
                 value='League'
                 onclick="change_league()"
