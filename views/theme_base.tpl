@@ -33,7 +33,10 @@
       <div class="navbar-inner">
         <div class="container">
           <a class="brand" href="{{ get_url('index') }}">{{ sitename }}</a>
-          <div class="repick repick-league navbar-text">Change your <a class='label label-info' href="{{ get_url('index') }}">League</a></div>
+          <div class="repick repick-league navbar-text">Change your <button class='label label-info'
+                value='League'
+                onclick="change_league()"
+                type='button'>League</button></div>
           <div class="repick repick-team navbar-text"><span class='team-rocks'>You rock!</span></div>
         </div>
       </div>
@@ -222,6 +225,17 @@
     function pick_team(league, team) {
         setCookie(league, team);
         update_results(league, team);
+    }
+
+    function change_league() {
+        var league = getCookie('cur_league');
+        delCookie('cur_league');
+
+        if (league) {
+            $('.league-block.' + league).addClass('hidden');
+
+            update_league('');
+        }
     }
 
     function change_team() {
