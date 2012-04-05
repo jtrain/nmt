@@ -215,6 +215,8 @@
         league = url_path;
         if (url_path === '') {
             league = getCookie('cur_league');
+        } else {
+            setCookie('cur_league', league);
         }
         update_league(league);
     }
