@@ -153,25 +153,6 @@
             + ";path='/';max-age=" + 3600*24*365;
     }
 
-    function initial_league() {
-        var url_path = window.location.pathname.slice(1);
-        if (url_path === '') {
-            league = get_cookie(last_league);
-            if (league === undefined) {
-                league = '';
-            }
-            return league;
-        }
-        else {
-            for (leag in leagues){
-                if (url_path === leag){
-                    return url_leag;
-                }
-            }
-            return '';
-        }
-    }
-
     function update_results(league, team) {
      try {
      if ( team === undefined) {
@@ -223,6 +204,15 @@
         }
     }
 
+    function initial_league() {
+        var url_path = window.location.pathname.slice(1);
+        league = url_path;
+        if (url_path === '') {
+            league = getCookie('cur_league');
+        }
+        update_league(league);
+    }
+
     function pick_league(league) {
         setCookie('cur_league', league);
         update_league(league);
@@ -232,6 +222,9 @@
         setCookie(league, team);
         update_results(league, team);
     }
+
+    // Get the whole thing rolling.
+    initial_league();
     </script>
   </body>
 </html>
