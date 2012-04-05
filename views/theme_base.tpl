@@ -175,11 +175,12 @@
        if (team.charAt(team.length - 1) === 's') {
          plural = '';
        }
-       var switchurl = "'/" + league + "/switch'";
        $('span.team-rocks').replaceWith("<span class='team-rocks'>"
                          + team + " rock" + plural + "!"
-                         + " (not <a class='label label-info' href=" + switchurl
-                         + " title='change teams'>your team</a>?)</span>");
+                         + " (not <button class='label label-info'"
+                         + " onclick='change_team()'"
+                         + " value='your team'"
+                         + " type='button'>your team</button>?)</span>");
      } else {
        // show the pick team view.
        $('.pick.' + league).removeClass('hidden');
@@ -221,6 +222,18 @@
     function pick_team(league, team) {
         setCookie(league, team);
         update_results(league, team);
+    }
+
+    function change_team() {
+        var league = getCookie('cur_league');
+        var team = getCookie(league);
+        var teamclass = team.replace(/ /g, '-');
+
+        delCookie(league);
+        $('.score.' + league).not('.' + teamclass).addClass('hidden');
+        $('.noscore.' + league).not('.' + teamclass).removeClass('hidden');
+
+        update_results(league, '');
     }
 
     // Get the whole thing rolling.
