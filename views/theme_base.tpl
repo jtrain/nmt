@@ -33,7 +33,7 @@
       <div class="navbar-inner">
         <div class="container">
           <a class="brand" href="{{ get_url('index') }}">{{ sitename }}</a>
-          <div class="repick repick-league navbar-text hidden">Change your <button class='label label-info'
+          <div class="repick repick-league navbar-text hidden">Change your <button class='btn btn-primary'
                 value='League'
                 onclick="change_league()"
                 type='button'>League</button></div>
@@ -180,7 +180,7 @@
        }
        $('span.team-rocks').replaceWith("<span class='team-rocks'>"
                          + team + " rock" + plural + "!"
-                         + " (not <button class='label label-info'"
+                         + " (not <button class='btn btn-primary'"
                          + " onclick='change_team()'"
                          + " value='your team'"
                          + " type='button'>your team</button>?)</span>");
