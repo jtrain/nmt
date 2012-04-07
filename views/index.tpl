@@ -70,7 +70,7 @@
                         <br>
                         <button type='button'
                                 value='Reveal!'
-                                class="btn btn-primary"
+                                class="btn btn-primary reveal"
                                 onclick="pick_league('{{ league }}')">Reveal!</button>
                     </div>
                 %end
