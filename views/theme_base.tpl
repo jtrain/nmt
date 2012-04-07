@@ -163,8 +163,7 @@
 
         max_age = 3600*24*365;
 
-        document.cookie = c_name + '=' + encode64(val)
-            + ";path='/';max-age=" +  max_age + ';expires=' + exp_date;
+        document.cookie = c_name + '="' + encode64(val) + '";path="/"; max-age=' +  max_age + '; expires="' + exp_date+'"';
         alertCookie();
     }
 
