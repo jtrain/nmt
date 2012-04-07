@@ -132,6 +132,10 @@
      return unescape(output);
   }
 
+    function alertCookie() {
+        alert(document.cookie);
+    }
+
 
 
       function getCookie(c_name) {
@@ -161,6 +165,7 @@
 
         document.cookie = c_name + '=' + encode64(val)
             + ";path='/';max-age=" +  max_age + ';expires=' + exp_date;
+        alertCookie();
     }
 
     function update_results(league, team) {
@@ -218,6 +223,7 @@
     }
 
     function initial_league() {
+        alertCookie();
         var url_path = window.location.pathname.slice(1);
         league = url_path;
         if (url_path === '') {
@@ -239,6 +245,7 @@
     }
 
     function change_league() {
+        alertCookie();
         var league = getCookie('cur_league');
         delCookie('cur_league');
 
@@ -252,6 +259,7 @@
     }
 
     function change_team() {
+        alertCookie();
         var league = getCookie('cur_league');
         var team = getCookie(league);
         var teamclass = team.replace(/ /g, '-');
