@@ -34,6 +34,13 @@ button.select {
     font-size:11px;
  }
 
+.game td button.btn{
+    margin:0;
+    line-height:14px;
+    padding: 0px 4px;
+    font-size:11px;
+}
+
 .my-nav {
     padding-bottom: 5px;
 }

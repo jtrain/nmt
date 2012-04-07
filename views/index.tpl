@@ -67,6 +67,11 @@
                     <div class='noscore {{ league }} {{game.home_name.replace(" ", "-")}}
                                 {{game.away_name.replace(" ", "-")}}'>
                         ? - ?
+                        <br>
+                        <button type='button'
+                                value='Reveal!'
+                                class="btn btn-primary"
+                                onclick="pick_league('{{ league }}')">Reveal!</button>
                     </div>
                 %end
               </td>
