@@ -1,6 +1,6 @@
 %rebase theme_base title=title
 
-<div class='row-fluid league-select'>
+<div class='row league-select'>
   <div class="span4">
     <h2>Pick your game!</h2>
       %for league, long_name in leagues.items():
