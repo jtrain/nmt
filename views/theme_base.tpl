@@ -32,7 +32,7 @@
     <div class="navbar">
       <div class="navbar-inner">
         <div class="container my-nav">
-          <a class="brand my-brand" href="javascript:void(0)" onclick='change_league()'>{{ sitename }}</a>
+          <a class="brand my-brand" href="javascript:void(0)" id='brand'>{{ sitename }}</a>
           <div class="repick repick-league navbar-text hidden">Change your <button class='btn btn-primary'
                 value='League'
                 onclick="change_league()"
@@ -261,6 +261,7 @@
     }
 
     // Get the whole thing rolling.
+    $('#brand').click(function() {change_league();});
     initial_league();
     </script>
   </body>
