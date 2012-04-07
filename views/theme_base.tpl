@@ -216,6 +216,11 @@
         }
     }
 
+    function reveal_score(league, home, away) {
+        $('.score.'+league+'.'+home+'.'+away).removeClass('hidden');
+        $('.noscore.'+league+'.'+home+'.'+away).addClass('hidden');
+    }
+
     function initial_league() {
         var url_path = window.location.pathname.slice(1);
         league = url_path;

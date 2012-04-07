@@ -71,7 +71,7 @@
                         <button type='button'
                                 value='Reveal!'
                                 class="btn btn-primary reveal"
-                                onclick="pick_league('{{ league }}')">Reveal!</button>
+                                onclick="reveal_score('{{ league }}','{{game.home_name.replace(" ", "-")}}', '{{game.away_name.replace(" ", "-")}}' )">Reveal!</button>
                     </div>
                 %end
               </td>
