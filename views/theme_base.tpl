@@ -152,8 +152,15 @@
       }
 
     function setCookie(c_name, val) {
+        var max_age;
+        var exp_date = new Date();
+        exp_date.setDate(exp_date.getDate() + 365);
+        exp_date.toGMTString();
+
+        max_age = 3600*24*365;
+
         document.cookie = c_name + '=' + encode64(val)
-            + ";path='/';max-age=" + 3600*24*365;
+            + ";path='/';max-age=" +  max_age + ';expires=' + exp_date;
     }
 
     function update_results(league, team) {
