@@ -26,7 +26,7 @@ your team's results!</p>
 
 %for league, long_name in leagues.items():
   <div class='league-block {{ league }} hidden'>
-    <form class="pick {{ league }} hidden" method="POST" action="/{{ league }}">
+    <div class="pick {{ league }} hidden">
       <div class='row'>
         <div class="span12">
           <h2>{{ long_name }}<br>Pick your team!</h2>
@@ -50,7 +50,7 @@ your team's results!</p>
           </table>
         </div>
       </div>
-    </form>
+    </div>
     <div class='row results {{ league }} hidden'>
       <div class="span12">
         <h2>{{ long_name }}<br>Game Results</h2>
