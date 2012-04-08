@@ -1,12 +1,15 @@
 table.game{
     width:100%;
 }
-td.home, th.home {
-    text-align:right;
+
+table.game td, table.game th{
     vertical-align:middle;
 }
+
+td.home, th.home {
+    text-align:right;
+}
 td.score, th.score {
-    vertical-align:middle;
     text-align:center;
     white-space:nowrap;
     max-width:60px;
@@ -14,7 +17,6 @@ td.score, th.score {
     min-width:40px;
 }
 td.away, th.away {
-    vertical-align:middle;
     text-align:left;
 }
 
