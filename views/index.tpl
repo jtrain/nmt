@@ -1,7 +1,7 @@
 %rebase theme_base title=title
 
 <div class='row intro-text'>
-  <div class='span4'>
+  <div class='span12'>
     <div class='well'>
       <h2>Game on!</h2>
       <p>Recorded your team's game?</p>
@@ -11,7 +11,7 @@ your team's results!</p>
   </div>
 </div>
 <div class='row league-select'>
-  <div class="span4">
+  <div class="span12">
     <h2>Pick your game!</h2>
       %for league, long_name in leagues.items():
         <p>
@@ -28,7 +28,7 @@ your team's results!</p>
   <div class='league-block {{ league }} hidden'>
     <form class="pick {{ league }} hidden" method="POST" action="/{{ league }}">
       <div class='row'>
-        <div class="span4">
+        <div class="span12">
           <h2>{{ long_name }}<br>Pick your team!</h2>
           <table class='game table table-bordered table-striped'>
             %for game in games[league]:
@@ -52,7 +52,7 @@ your team's results!</p>
       </div>
     </form>
     <div class='row results {{ league }} hidden'>
-      <div class="span4">
+      <div class="span12">
         <h2>{{ long_name }}<br>Game Results</h2>
         <table class="game table table-bordered table-striped">
           <thead>
