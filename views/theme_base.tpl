@@ -200,18 +200,34 @@
      }
     }
 
+    function is_first_time() {
+        var is_first = getCookie('first_time');
+
+        if (is_first === 'nope') {
+            return false;
+        }
+        return true;
+    }
+
     function update_league(league) {
         try {
             if (league === undefined) {
+                if (is_first_time()) {
+                    $('.intro-text').removeClass('hidden');
+                }
                 $('.league-select').removeClass('hidden');
             }
             else if ($('.league-block').filter('.' + league).length > 0) {
                 update_results(league, getCookie(league));
+                $('.intro-text').addClass('hidden');
                 $('.league-select').addClass('hidden');
                 $('.league-block.' + league).removeClass('hidden');
                 $('.repick-league').removeClass('hidden');
             }
         } catch(err) {
+            if (is_first_time()) {
+                $('.intro-text').removeClass('hidden');
+            }
             $('.league-select').removeClass('hidden');
         }
     }
@@ -233,6 +249,7 @@
     }
 
     function pick_league(league) {
+        setCookie('first_time','nope');
         setCookie('cur_league', league);
         update_league(league);
     }

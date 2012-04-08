@@ -1,5 +1,15 @@
 %rebase theme_base title=title
 
+<div class='row intro-text'>
+  <div class='span4'>
+    <div class='well'>
+      <h2>Game on!</h2>
+      <p>Recorded your team's game?</p>
+      <p>Select a league below to see the results of other games, without seeing
+your team's results!</p>
+    </div>
+  </div>
+</div>
 <div class='row league-select'>
   <div class="span4">
     <h2>Pick your game!</h2>
