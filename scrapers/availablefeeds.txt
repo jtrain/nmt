@@ -1,0 +1,13 @@
+Go to "<spname>.webservice.sportsflash.com.au/WebService.asmx?WSDL" to get the
+WSDL definition of the sports listed below:
+
+<li><a href="SeriesHome.aspx?spname=ARF&compid=138" NAME="&lid=afl&lpos=topnav"  accesskey="a"><span>AFL</span></a></li>
+<li><a href="SeriesHome.aspx?spname=BKB&compid=147" NAME="&lid=basketball&lpos=topnav"  accesskey="b"><span>Basketball</span></a></li>
+<li><a href="SeriesHome.aspx?spname=CKT&compid=2818" NAME="&lid=cricket&lpos=topnav"  accesskey="c"><span>Cricket</span></a></li>
+<li><a href="SeriesHome.aspx?spname=GLF&compid=1" NAME="&lid=golf&lpos=topnav"  accesskey="g"><span>Golf</span></a> </li>
+<li><a href="SeriesHome.aspx?spname=MOT&compid=88" NAME="&lid=motorsports&lpos=topnav"  accesskey="m"><span>Motor Sports</span></a></li>
+<li><a href="SeriesHome.aspx?spname=RBL&compid=127" NAME="&lid=golf&lpos=topnav"  accesskey="rl"><span>Rugby League</span></a> </li>
+<li><a href="SeriesHome.aspx?spname=RBU&compid=134" NAME="&lid=golf&lpos=topnav"  accesskey="ru"><span>Rugby Union</span></a> </li>
+<li><a href="SeriesHome.aspx?spname=SOC&compid=320" NAME="&lid=tennis&lpos=topnav" class='active' accesskey="s"><span>Soccer</span></a></li>
+<li><a href="SeriesHome.aspx?spname=TNS&compid=2052" NAME="&lid=tennis&lpos=topnav"  accesskey="t"><span>Tennis</span></a></li>
+<li><a href="SeriesHome.aspx?spname=HOR&compid=1" NAME="&lid=hrs&lpos=topnav" accesskey="hr"><span>Racing</span></a></li>
