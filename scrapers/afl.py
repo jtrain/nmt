@@ -14,7 +14,7 @@ import settings
 
 Game = namedtuple("Game", "home_name home_score away_name away_score")
 
-url = 'http://xml.afl.com.au/mobilewebservices.asmx?WSDL'
+url = "http://arf.webservice.sportsflash.com.au/WebService.asmx?WSDL"
 
 client = Client(url)
 
@@ -150,3 +150,12 @@ def scrape_league(league):
     # save in the database.
     store_games_in_db(league, year, current_round_id, games)
 
+
+if __name__ == "__main__":
+    print client
+    # print client.service.GetCompetitionFixture(11235813, 138, roundid, teamid, venueid)
+    # print client.service.GetCompetitionFixture(11235813, 138, 1, 16, 42)
+    # print client.service.GetCompetitionFixture(11235813, 138, 1, 16, 42)
+    # print client.service.GetFixture(1,138)
+    print client.service.GetSeriesTeam(1,138)
+    # print client.service.GetCompetitionList(1)
