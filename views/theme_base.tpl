@@ -168,11 +168,6 @@
        // show the pick team view.
        $('.pick.' + league).removeClass('hidden');
      } else if ($('.score').filter('.' + team.replace(/ /g, '-')).length > 0) {
-       // hide the ?s for games you want to see and show the scores.
-       var teamclass = team.replace(/ /g, '-');
-       $('.noscore.' + league).not('.' + teamclass).addClass('hidden');
-       $('.score.' + league).not('.' + teamclass).removeClass('hidden');
-
        // now show the entire results container.
        $('.results.' + league).removeClass('hidden');
 
@@ -272,14 +267,33 @@
         }
     }
 
+
+    function reveal_all() {
+        var league = getCookie('cur_league');
+        $('td.score .noscore.' + league).addClass('hidden');
+        $('td.score .score.' + league).removeClass('hidden');
+    }
+
+    $('.btn-revealall').click(reveal_all);
+
+    function reveal_all_but_my_team() {
+        var league = getCookie('cur_league');
+        var team = getCookie(league);
+        var teamclass = team.replace(/ /g, '-');
+
+        $('td.score .noscore.' + league).not('.'+teamclass).addClass('hidden');
+        $('td.score .score.' + league).not('.'+teamclass).removeClass('hidden');
+    }
+    $('.btn-revealnotmyteam').click(reveal_all_but_my_team);
+
     function change_team() {
         var league = getCookie('cur_league');
         var team = getCookie(league);
         var teamclass = team.replace(/ /g, '-');
 
         delCookie(league);
-        $('.score.' + league).not('.' + teamclass).addClass('hidden');
-        $('.noscore.' + league).not('.' + teamclass).removeClass('hidden');
+        $('.score.' + league).addClass('hidden');
+        $('.noscore.' + league).removeClass('hidden');
 
         $('.results.' + league).addClass('hidden');
 

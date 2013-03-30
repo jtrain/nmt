@@ -54,6 +54,10 @@ your team's results!</p>
     <div class='row results {{ league }} hidden'>
       <div class="span12">
         <h2>{{ long_name }}<br>Game Results</h2>
+        <p>
+            <button type='button' value='Reveal All Games!' class="btn btn-revealall btn-mini btn-danger">Reveal All Games!</button>
+            <button type='button' value="Reveal All But Don't Show My Team!" class="btn btn-primary btn-revealnotmyteam btn-mini">Reveal All But Don't Show My Team!</button>
+        </p>
         <table class="game table table-bordered table-striped">
           <thead>
            <tr><th class="home">Home</th><th class="score">vs</th><th class="away">Away</th></tr>
