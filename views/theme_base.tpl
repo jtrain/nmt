@@ -233,19 +233,20 @@
     }
 
     function initial_league(league) {
+        var pagetitle = "Don't Show My Team"
         if (league === undefined) {
             var url_path = window.location.pathname.slice(1);
             league = url_path;
             if (url_path === '') {
                 league = getCookie('cur_league');
                 if (league) {
-                    history.replaceState({league:league}, league, league);
+                    history.replaceState({league:league}, league +' - '+ pagetitle, league);
                 } else {
-                    history.replaceState({league:''}, '/', '/');
+                    history.replaceState({league:''}, pagetitle, '/');
                 }
             } else {
                 setCookie('cur_league', league);
-                history.replaceState({league:league}, league, league);
+                history.replaceState({league:league}, league +' - '+ pagetitle, league);
             }
         } else if (league !== '') {
             setCookie('cur_league', league);
@@ -256,7 +257,7 @@
     function pick_league(league) {
         setCookie('first_time','nope');
         setCookie('cur_league', league);
-        history.pushState({league:league}, league, league);
+        history.pushState({league:league}, league +" - Don't Show My Team", league);
         update_league(league);
     }
 
@@ -274,7 +275,7 @@
             $('.repick-league').addClass('hidden');
             $('.repick-team').addClass('hidden');
 
-            history.pushState({league:''}, '/', '/');
+            history.pushState({league:''}, "Don't Show My Team", '/');
             update_league('');
         }
     }
