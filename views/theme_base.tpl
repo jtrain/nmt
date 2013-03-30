@@ -206,7 +206,7 @@
 
     function update_league(league) {
         try {
-            if (league === undefined) {
+            if ((league === undefined) || (league === '')) {
                 if (is_first_time()) {
                     $('.intro-text').removeClass('hidden');
                 }
@@ -232,12 +232,22 @@
         $('.noscore.'+league+'.'+home+'.'+away).addClass('hidden');
     }
 
-    function initial_league() {
-        var url_path = window.location.pathname.slice(1);
-        league = url_path;
-        if (url_path === '') {
-            league = getCookie('cur_league');
-        } else {
+    function initial_league(league) {
+        if (league === undefined) {
+            var url_path = window.location.pathname.slice(1);
+            league = url_path;
+            if (url_path === '') {
+                league = getCookie('cur_league');
+                if (league) {
+                    history.pushState({league:league}, league, league);
+                } else {
+                    history.pushState({league:''}, '/', '/');
+                }
+            } else {
+                setCookie('cur_league', league);
+                history.pushState({league:league}, league, league);
+            }
+        } else if (league !== '') {
             setCookie('cur_league', league);
         }
         update_league(league);
@@ -246,6 +256,7 @@
     function pick_league(league) {
         setCookie('first_time','nope');
         setCookie('cur_league', league);
+        history.pushState({league:league}, league, league);
         update_league(league);
     }
 
@@ -263,6 +274,7 @@
             $('.repick-league').addClass('hidden');
             $('.repick-team').addClass('hidden');
 
+            history.pushState({league:''}, '/', '/');
             update_league('');
         }
     }
@@ -303,6 +315,19 @@
     }
 
     // Get the whole thing rolling.
+    window.onpopstate = function(event) {
+        if (event.state) {
+            if (event.state.league === '') {
+                $('.league-block').addClass('hidden');
+                $('.repick-league').addClass('hidden');
+                $('.repick-team').addClass('hidden');
+                delCookie('cur_league');
+            }
+            initial_league(event.state.league);
+        } else {
+            initial_league();
+        }
+    };
     initial_league();
     </script>
   </body>
