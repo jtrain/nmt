@@ -25,12 +25,22 @@ client = Client(url)
 
 # Process:
 # Get fixture
+# - only request once per day
 # Compute latest round
 # Compute games that need to be fetched
 # Look up teamid from team name
 #  - Scrape team names if necessary
-#
+# Update games active games
+# Send latest round details to server
 def get_fixture_and_store_in_db(conn, client, uid):
+    methodname = 'GetFixture'
+    today = datetime.date.today()
+    last_fetch = afl_model.get_fetchtime(conn, methodname)
+    if last_fetch:
+        # We have already received this today. It doesn't change very much.
+        if today == last_fetch.checkdatetime.date():
+            return
+
     fixture = client.service.GetFixture(uid)
     fixture_records = []
     for record in fixture.Fixture.Event:
@@ -49,6 +59,7 @@ def get_fixture_and_store_in_db(conn, client, uid):
                                             )
                                         )
     afl_model.update_fixture(conn, fixture_records)
+    afl_model.update_fetchtime(conn, methodname, datetime.datetime.now())
 
 def update_and_get_teamid(conn, match):
     seriesId = match.seriesId

@@ -95,7 +95,7 @@ create table if not exists AFLGame (
 FetchTime = """
 create table if not exists FetchTime (
  methodname text,
- checkdatetime datetime
+ checkdatetime timestamp
 );"""
 
 def create_db_and_get_connection(db_name):
@@ -268,3 +268,15 @@ def get_teamid(conn, seriesId, teamname):
                     where seriesId=?
                     and longname=?""", (seriesId, teamname))
     return result.fetchone()
+
+def get_fetchtime(conn, method):
+    results = conn.execute("""select checkdatetime from FetchTime
+                                where methodname=?""", (method,))
+    return results.fetchone()
+
+def update_fetchtime(conn, method, time):
+    conn.execute("""insert or replace into FetchTime
+                    (methodname, checkdatetime)
+                    values
+                    (?, ?)""", (method, time))
+    conn.commit()
