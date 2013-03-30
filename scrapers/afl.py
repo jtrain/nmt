@@ -107,7 +107,6 @@ def update_aflgames(conn, matches):
                                 currentstatus=fixture_match._currentStatus
                                 )
 
-        print aflgame
         afl_model.update_AFLGame(conn, aflgame)
 
 
