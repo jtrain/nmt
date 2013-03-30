@@ -6,9 +6,11 @@ from collections import namedtuple
 import datetime
 import json
 import os
+import sys
+
 import requests
 from suds.client import Client
-import sys
+import pytz
 
 sys.path.append(os.path.join(os.path.dirname(__file__),'..'))
 import settings
@@ -16,6 +18,9 @@ import afl_model
 
 ARBITRARY_UID = 11235813
 STARTDATETIME_FMT = "%Y-%m-%dT%H:%M:%SZ"
+
+# It appears that game times are given in Eastern daylight savings time.
+MELBOURNE_TIME = pytz.timezone('Australia/Melbourne')
 
 Game = namedtuple("Game", "home_name home_score away_name away_score")
 
@@ -34,7 +39,9 @@ client = Client(url)
 # Send latest round details to server
 def get_fixture_and_store_in_db(conn, client, uid):
     methodname = 'GetFixture'
-    today = datetime.date.today()
+    now = datetime.datetime.now()
+    melb_now = MELBOURNE_TIME.localize(now)
+    today = melb_now.date()
     last_fetch = afl_model.get_fetchtime(conn, methodname)
     if last_fetch:
         # We have already received this today. It doesn't change very much.
@@ -59,7 +66,7 @@ def get_fixture_and_store_in_db(conn, client, uid):
                                             )
                                         )
     afl_model.update_fixture(conn, fixture_records)
-    afl_model.update_fetchtime(conn, methodname, datetime.datetime.now())
+    afl_model.update_fetchtime(conn, methodname, melb_now)
 
 def update_and_get_teamid(conn, match):
     seriesId = match.seriesId
@@ -146,9 +153,13 @@ def scrape_league(league):
     Pass in the unque string for the league you want to scrape.
     """
 
+    now = datetime.datetime.now()
+    melb_now = MELBOURNE_TIME.localize(now)
+    today = melb_now.date()
+
     conn = afl_model.create_db_and_get_connection(afl_model.AFL_DB_FILE)
     get_fixture_and_store_in_db(conn, client, ARBITRARY_UID)
-    round = afl_model.get_round(conn)
+    round = afl_model.get_round(conn, today)
     afl_model.refresh_AFLGame_table_round(conn, round.seriesId, round.roundId)
     active_games = afl_model.get_active_games(conn)
     update_aflgames(conn, active_games)

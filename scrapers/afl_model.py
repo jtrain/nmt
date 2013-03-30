@@ -156,7 +156,7 @@ def compute_round(start_end_round_dates, today):
 
     return this_round
 
-def get_round(conn):
+def get_round(conn, today):
     start_end_round_dates = """select seriesId,
                                 roundId,
                                 min(startdatetime) as "start [timestamp]",
@@ -165,8 +165,6 @@ def get_round(conn):
                         group by seriesId, roundId
                         order by seriesId, roundId"""
     start_end_round_dates = conn.execute(start_end_round_dates).fetchall()
-
-    today = datetime.date.today()
 
     return compute_round(start_end_round_dates, today)
 
