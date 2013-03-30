@@ -5,6 +5,8 @@ import sqlite3
 import settings
 import sys
 
+import pytz
+
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 from utils import generic_namedtuple_factory
@@ -20,7 +22,7 @@ FixtureRecord = namedtuple("FixtureRecord", ["seriesId",
                                                 "venueId",
                                                 "team_one",
                                                 "team_two",
-                                                "startdatetime"])
+                                                "startdatetimeUTC"])
 
 TeamNameRecord = namedtuple("TeamNameRecord", ["seriesId",
                                                 "teamId",
@@ -50,7 +52,7 @@ create table if not exists Fixture (
 
  team_one text,
  team_two text,
- startdatetime timestamp,
+ startdatetimeUTC timestamp,
 
  primary key (seriesId, roundId, matchId)
 
@@ -84,7 +86,7 @@ create table if not exists AFLGame (
  away_name text,
  away_score integer,
 
- startdatetime timestamp,
+ startdatetimeUTC timestamp,
  currentstatus text,
 
  primary key (seriesId, roundId, matchId)
@@ -121,7 +123,7 @@ def update_fixture(conn, records):
                                 venueId,
                                 team_one,
                                 team_two,
-                                startdatetime)
+                                startdatetimeUTC)
                             values
                                 (:seriesId,
                                     :roundId,
@@ -129,13 +131,13 @@ def update_fixture(conn, records):
                                     :venueId,
                                     :team_one,
                                     :team_two,
-                                    :startdatetime)"""
+                                    :startdatetimeUTC)"""
     records_as_dicts = [record._asdict() for record in records]
     conn.execute(del_fixture)
     conn.executemany(insert_fixture_games, records_as_dicts)
     conn.commit()
 
-def compute_round(start_end_round_dates, today):
+def compute_round(start_end_round_dates, start_melb_day):
     # only one round to return
     if len(start_end_round_dates) == 1:
         return start_end_round_dates[0]
@@ -144,29 +146,30 @@ def compute_round(start_end_round_dates, today):
     # and midnight of the night the last game of the round is played, return
     # that round.
     for round in start_end_round_dates:
-        if (today < round.end.date() + ONE_DAY) and (today > round.start.date()):
+        if ((start_melb_day < pytz.utc.localize(round.end) + ONE_DAY)
+                    and (start_melb_day > pytz.utc.localize(round.start))):
             return round
 
     # If we are not in a round, return the last played round or the next round
     # if we are within 1 day of the first game day (eg. Thursday for a Friday
     # night match)
     for round in start_end_round_dates:
-        if (round.start.date() - ONE_DAY) <= today:
+        if (pytz.utc.localize(round.start) - ONE_DAY) <= start_melb_day:
             this_round = round
 
     return this_round
 
-def get_round(conn, today):
+def get_round(conn, start_melb_day):
     start_end_round_dates = """select seriesId,
                                 roundId,
-                                min(startdatetime) as "start [timestamp]",
-                                max(startdatetime) as "end [timestamp]"
+                                min(startdatetimeUTC) as "start [timestamp]",
+                                max(startdatetimeUTC) as "end [timestamp]"
                         from Fixture
                         group by seriesId, roundId
                         order by seriesId, roundId"""
     start_end_round_dates = conn.execute(start_end_round_dates).fetchall()
 
-    return compute_round(start_end_round_dates, today)
+    return compute_round(start_end_round_dates, start_melb_day)
 
 def refresh_AFLGame_table_round(conn, seriesId, roundId):
     param_dict = {'seriesId': seriesId, 'roundId': roundId}
@@ -183,7 +186,7 @@ def refresh_AFLGame_table_round(conn, seriesId, roundId):
                         home_score,
                         away_name,
                         away_score,
-                        startdatetime,
+                        startdatetimeUTC,
                         currentstatus
                         )
                     select seriesId,
@@ -194,7 +197,7 @@ def refresh_AFLGame_table_round(conn, seriesId, roundId):
                             null,
                             team_two,
                             null,
-                            StartDateTime,
+                            startdateTimeUTC,
                             ''
                         from Fixture
                         where seriesId=:seriesId
@@ -226,7 +229,7 @@ def get_active_games(conn):
                                     away_name,
                                     venueId
                             from AFLGame
-                            where startdatetime < datetime('now', 'localtime')
+                            where startdatetimeUTC < datetime('now')
                                 and currentstatus != 'FT'
                                 """)
 

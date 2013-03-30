@@ -17,9 +17,10 @@ import settings
 import afl_model
 
 ARBITRARY_UID = 11235813
-STARTDATETIME_FMT = "%Y-%m-%dT%H:%M:%SZ"
+STARTDATETIME_FMT = "%Y-%m-%dT%H:%M:%S"
+DB_DATETIME_FMT = "%Y-%m-%d %H:%M:%S"
 
-# It appears that game times are given in Eastern daylight savings time.
+# We want to update the times when on the start of new melbourne days.
 MELBOURNE_TIME = pytz.timezone('Australia/Melbourne')
 
 Game = namedtuple("Game", "home_name home_score away_name away_score")
@@ -37,15 +38,12 @@ client = Client(url)
 #  - Scrape team names if necessary
 # Update games active games
 # Send latest round details to server
-def get_fixture_and_store_in_db(conn, client, uid):
+def get_fixture_and_store_in_db(conn, client, uid, start_melb_day):
     methodname = 'GetFixture'
-    now = datetime.datetime.now()
-    melb_now = MELBOURNE_TIME.localize(now)
-    today = melb_now.date()
     last_fetch = afl_model.get_fetchtime(conn, methodname)
     if last_fetch:
         # We have already received this today. It doesn't change very much.
-        if today == last_fetch.checkdatetime.date():
+        if start_melb_day > pytz.utc.localize(last_fetch.checkdatetime) + datetime.timedelta(days=1):
             return
 
     fixture = client.service.GetFixture(uid)
@@ -53,7 +51,7 @@ def get_fixture_and_store_in_db(conn, client, uid):
     for record in fixture.Fixture.Event:
         # Match text = "Carlton vs. Richmond"
         teams = record.Match.split(' vs. ')
-        startdatetime = datetime.datetime.strptime(record.StartDateTime,
+        startdatetimeUTC = datetime.datetime.strptime(record.StartDateTimeUTC,
                                                     STARTDATETIME_FMT)
         fixture_records.append(afl_model.FixtureRecord(
                                             seriesId=record._seriesId,
@@ -62,11 +60,14 @@ def get_fixture_and_store_in_db(conn, client, uid):
                                             venueId=record.Venue._venueId,
                                             team_one=teams[0],
                                             team_two=teams[1],
-                                            startdatetime=startdatetime
+                                            startdatetimeUTC=startdatetimeUTC
                                             )
                                         )
     afl_model.update_fixture(conn, fixture_records)
-    afl_model.update_fetchtime(conn, methodname, melb_now)
+    afl_model.update_fetchtime(conn,
+                                methodname,
+                                start_melb_day.strftime(DB_DATETIME_FMT)
+                                )
 
 def update_and_get_teamid(conn, match):
     seriesId = match.seriesId
@@ -155,11 +156,12 @@ def scrape_league(league):
 
     now = datetime.datetime.now()
     melb_now = MELBOURNE_TIME.localize(now)
-    today = melb_now.date()
+    today = melb_now.replace(hour=0, minute=0, second=0)
+    start_melb_day = today.astimezone(pytz.utc)
 
     conn = afl_model.create_db_and_get_connection(afl_model.AFL_DB_FILE)
-    get_fixture_and_store_in_db(conn, client, ARBITRARY_UID)
-    round = afl_model.get_round(conn, today)
+    get_fixture_and_store_in_db(conn, client, ARBITRARY_UID, start_melb_day)
+    round = afl_model.get_round(conn, start_melb_day)
     afl_model.refresh_AFLGame_table_round(conn, round.seriesId, round.roundId)
     active_games = afl_model.get_active_games(conn)
     update_aflgames(conn, active_games)
