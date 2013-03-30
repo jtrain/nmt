@@ -239,13 +239,13 @@
             if (url_path === '') {
                 league = getCookie('cur_league');
                 if (league) {
-                    history.pushState({league:league}, league, league);
+                    history.replaceState({league:league}, league, league);
                 } else {
-                    history.pushState({league:''}, '/', '/');
+                    history.replaceState({league:''}, '/', '/');
                 }
             } else {
                 setCookie('cur_league', league);
-                history.pushState({league:league}, league, league);
+                history.replaceState({league:league}, league, league);
             }
         } else if (league !== '') {
             setCookie('cur_league', league);
