@@ -16,7 +16,11 @@ sys.path.append(os.path.join(settings.APP_DIR, 'scrapers'))
 import sbs
 import afl
 
-logging.basicConfig(filename=settings.LOG_FILE, level=logging.ERROR)
+LOG_FORMAT = '%(levelno)s: %(asctime)-15s - %(message)s'
+logging.basicConfig(filename=settings.LOG_FILE,
+                    level=logging.ERROR,
+                    format=LOG_FORMAT
+                    )
 
 def scrape(module, league):
     try:
