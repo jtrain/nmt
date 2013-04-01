@@ -11,6 +11,7 @@ def here(filename):
     return os.path.join(APP_DIR, filename)
 
 DB_NAME = here('nmt.db')
+AFL_DB_NAME = here('afl.db')
 APP_URL = "http://127.0.0.1:8080/"
 
 LEAGUES = {'epl':'English Premier League',

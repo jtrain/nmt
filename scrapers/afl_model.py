@@ -11,7 +11,6 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 from utils import generic_namedtuple_factory
 
-AFL_DB_FILE = 'afl.db'
 AFL_CODE = 'afl'
 
 ONE_DAY = datetime.timedelta(days=1)

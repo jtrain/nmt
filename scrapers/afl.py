@@ -159,7 +159,7 @@ def scrape_league(league):
     today = melb_now.replace(hour=0, minute=0, second=0)
     start_melb_day = today.astimezone(pytz.utc)
 
-    conn = afl_model.create_db_and_get_connection(afl_model.AFL_DB_FILE)
+    conn = afl_model.create_db_and_get_connection(settings.AFL_DB_NAME)
     get_fixture_and_store_in_db(conn, client, ARBITRARY_UID, start_melb_day)
     round = afl_model.get_round(conn, start_melb_day)
     afl_model.refresh_AFLGame_table_round(conn, round.seriesId, round.roundId)
