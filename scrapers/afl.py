@@ -164,7 +164,6 @@ def scrape_league(league):
     round = afl_model.get_round(conn, start_melb_day)
     afl_model.refresh_AFLGame_table_round(conn, round.seriesId, round.roundId)
     active_games = afl_model.get_active_games(conn)
-    afl_model.remove_previous_AFLGames(conn, round.seriesId, round.roundId)
     update_aflgames(conn, active_games)
     update_server_afl(conn, league, round)
 

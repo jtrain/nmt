@@ -178,7 +178,7 @@ def refresh_AFLGame_table_round(conn, seriesId, roundId):
     param_dict = {'seriesId': seriesId, 'roundId': roundId}
     conn.execute("""delete from AFLGame
                     where seriesId != :seriesId
-                        and roundId != :roundId""", param_dict)
+                        or roundId != :roundId""", param_dict)
 
     insert_or_ignore_new_games = """insert or ignore into AFLGame
                     (seriesId,
@@ -210,14 +210,6 @@ def refresh_AFLGame_table_round(conn, seriesId, roundId):
 
     conn.commit()
 
-
-def remove_previous_AFLGames(conn, seriesId, roundId):
-    conn.execute("""delete from AFLGame
-                    where seriesId != :seriesId
-                        and roundId != :roundId""",
-                        {'seriesId':seriesId,
-                            'roundId':roundId})
-    conn.commit()
 
 def update_AFLGame(conn, aflgame):
     conn.execute("""update AFLGame
