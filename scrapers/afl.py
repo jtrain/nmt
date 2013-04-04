@@ -43,7 +43,7 @@ def get_fixture_and_store_in_db(conn, client, uid, start_melb_day):
     last_fetch = afl_model.get_fetchtime(conn, methodname)
     if last_fetch:
         # We have already received this today. It doesn't change very much.
-        if start_melb_day > pytz.utc.localize(last_fetch.checkdatetime) + datetime.timedelta(days=1):
+        if start_melb_day < pytz.utc.localize(last_fetch.checkdatetime) + datetime.timedelta(days=1):
             return
 
     fixture = client.service.GetFixture(uid)
@@ -164,6 +164,7 @@ def scrape_league(league):
     round = afl_model.get_round(conn, start_melb_day)
     afl_model.refresh_AFLGame_table_round(conn, round.seriesId, round.roundId)
     active_games = afl_model.get_active_games(conn)
+    afl_model.remove_previous_AFLGames(conn, round.seriesId, round.roundId)
     update_aflgames(conn, active_games)
     update_server_afl(conn, league, round)
 

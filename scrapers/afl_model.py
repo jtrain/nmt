@@ -13,6 +13,7 @@ from utils import generic_namedtuple_factory
 
 AFL_CODE = 'afl'
 
+MELBOURNE_TIME = pytz.timezone('Australia/Melbourne')
 ONE_DAY = datetime.timedelta(days=1)
 
 FixtureRecord = namedtuple("FixtureRecord", ["seriesId",
@@ -95,7 +96,7 @@ create table if not exists AFLGame (
 # Last update
 FetchTime = """
 create table if not exists FetchTime (
- methodname text,
+ methodname text primary key on conflict abort,
  checkdatetime timestamp
 );"""
 
@@ -153,7 +154,10 @@ def compute_round(start_end_round_dates, start_melb_day):
     # if we are within 1 day of the first game day (eg. Thursday for a Friday
     # night match)
     for round in start_end_round_dates:
-        if (pytz.utc.localize(round.start) - ONE_DAY) <= start_melb_day:
+        game_day_start = MELBOURNE_TIME.localize(round.start)
+        game_day_start.replace(hour=0, minute=0, second=0)
+        game_day_start_utc = game_day_start.astimezone(pytz.utc)
+        if (game_day_start_utc - ONE_DAY) <= start_melb_day:
             this_round = round
 
     return this_round
@@ -204,6 +208,15 @@ def refresh_AFLGame_table_round(conn, seriesId, roundId):
 
     conn.execute(insert_or_ignore_new_games, param_dict)
 
+    conn.commit()
+
+
+def remove_previous_AFLGames(conn, seriesId, roundId):
+    conn.execute("""delete from AFLGame
+                    where seriesId != :seriesId
+                        and roundId != :roundId""",
+                        {'seriesId':seriesId,
+                            'roundId':roundId})
     conn.commit()
 
 def update_AFLGame(conn, aflgame):
