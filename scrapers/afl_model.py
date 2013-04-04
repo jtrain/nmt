@@ -155,7 +155,7 @@ def compute_round(start_end_round_dates, start_melb_day):
     # night match)
     for round in start_end_round_dates:
         game_day_start = MELBOURNE_TIME.localize(round.start)
-        game_day_start.replace(hour=0, minute=0, second=0)
+        game_day_start = game_day_start.replace(hour=0, minute=0, second=0)
         game_day_start_utc = game_day_start.astimezone(pytz.utc)
         if (game_day_start_utc - ONE_DAY) <= start_melb_day:
             this_round = round
